@@ -6,10 +6,12 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .idea
+.vscode/
 
 # Dependency directories
 node_modules/
 
 # dotenv environment variables file
-.env
+.env.development
+.env.production
 .env.test
