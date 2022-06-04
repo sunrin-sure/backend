@@ -33,6 +33,10 @@ class App {
     }); 
   }
 
+  public getServer() {
+    return this.app;
+  }
+
   private initializeMiddlewares() {
     this.app.use(morgan(LOG_FORMAT, { stream }));
     this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
