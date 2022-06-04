@@ -12,6 +12,9 @@ lerna-debug.log*
 node_modules/
 yarn.lock
 
+# build / generate output
+dist
+
 # dotenv environment variables file
 .env.development
 .env.production
