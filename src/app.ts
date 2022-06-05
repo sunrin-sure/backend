@@ -2,12 +2,14 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
+import { connect, ConnectOptions, set } from 'mongoose';
 
 import { CREDENTIALS, LOG_FORMAT, NODE_ENV, ORIGIN, PORT } from '@config';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from './middleware/error.middleware';
 
 import { logger, stream } from '@utils/logger';
+import { dbConnection } from './database';
 
 class App {
   public app: express.Application;
@@ -19,8 +21,7 @@ class App {
     this.env = NODE_ENV || 'development';
     this.port = PORT || 3000;
 
-    // Connect Database
-
+    this.connectToDatabase();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeErrorHandler();
@@ -35,6 +36,14 @@ class App {
 
   public getServer() {
     return this.app;
+  }
+
+  private connectToDatabase() {
+    if (this.env !== 'production') {
+      set('debug', true);
+    }
+
+    connect(dbConnection.url, dbConnection.options as ConnectOptions);
   }
 
   private initializeMiddlewares() {
