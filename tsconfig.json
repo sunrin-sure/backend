@@ -30,7 +30,8 @@
       "@services/*": ["services/*"],
       "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@dtos/*": ["dtos/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.json", ".env"],
