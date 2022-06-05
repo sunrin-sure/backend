@@ -1,5 +1,5 @@
 import {
-  IsArray, IsBoolean, IsEmail, IsString,
+  IsArray, IsEmail, IsString,
 } from 'class-validator';
 
 export class CreateUserDto {
