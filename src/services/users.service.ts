@@ -1,9 +1,9 @@
 import userModel from '@models/user.model';
 import { User } from '@interfaces/users.interface';
-import { HttpException } from '@/exceptions/HttpException';
-import { isEmpty } from '@utils/empty';
-import { CreateUserDto } from '@/dtos/users.dto';
+import isEmpty from '@utils/empty';
 import { hash } from 'bcrypt';
+import { HttpException } from '@/exceptions/HttpException';
+import { CreateUserDto } from '@/dtos/users.dto';
 
 class UserService {
   public users = userModel;
@@ -17,7 +17,7 @@ class UserService {
     if (isEmpty(userId)) throw new HttpException(400, "You're not userId");
 
     const findUser: User = await this.users.findOne({ _id: userId });
-    if(!findUser) throw new HttpException(409, "You're not user");
+    if (!findUser) throw new HttpException(409, "You're not user");
 
     return findUser;
   }
@@ -37,7 +37,7 @@ class UserService {
   public async updateUser(userId: string, userData: CreateUserDto): Promise<User> {
     if (isEmpty(userId)) throw new HttpException(400, "You're not userId");
 
-     if (userData.email) {
+    if (userData.email) {
       const findUser: User = await this.users.findOne({ email: userData.email });
       if (findUser && findUser._id != userId) throw new HttpException(409, `You're email ${userData.email} already exists`);
     }
