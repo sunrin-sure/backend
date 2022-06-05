@@ -20,11 +20,6 @@ const userSchema: Schema = new Schema({
     type: [String],
     required: false,
   },
-  verified: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
 });
 
 const userModel = model<User & Document>('User', userSchema);

@@ -4,13 +4,12 @@ import { HttpException } from '@/exceptions/HttpException';
 import { isEmpty } from '@utils/empty';
 import { CreateUserDto } from '@/dtos/users.dto';
 import { hash } from 'bcrypt';
-import { logger } from '@utils/logger';
 
 class UserService {
   public users = userModel;
 
   public async findAllUser(): Promise<User[]> {
-    const users: User[] = await this.users.find();
+    const users: User[] = await this.users.find().select({ _id: 1, username: 1, fields: 1 });
     return users;
   }
 
@@ -48,7 +47,7 @@ class UserService {
       userData = { ...userData, password: hashedPassword };
     }
 
-    const updateUserById: User = await this.users.findByIdAndUpdate(userId, userData);
+    const updateUserById: User = await this.users.findByIdAndUpdate(userId, userData, { returnDocument: 'after' });
     if (!updateUserById) throw new HttpException(409, "You're not user");
 
     return updateUserById;

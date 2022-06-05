@@ -12,7 +12,4 @@ export class CreateUserDto {
 
   @IsArray()
   public fields: string[];
-
-  @IsBoolean()
-  public verified: boolean;
 }
