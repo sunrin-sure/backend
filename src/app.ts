@@ -9,9 +9,9 @@ import {
 } from '@config';
 import { Routes } from '@interfaces/routes.interface';
 import { logger, stream } from '@utils/logger';
-import errorMiddleware from './middleware/error.middleware';
+import errorMiddleware from '@middlewares/error.middleware';
 
-import { dbConnection } from './database';
+import { dbConnection } from '@databases';
 
 class App {
   public app: express.Application;
