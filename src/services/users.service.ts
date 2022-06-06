@@ -3,7 +3,7 @@ import { User } from '@interfaces/users.interface';
 import isEmpty from '@utils/empty';
 import { hash } from 'bcrypt';
 import { HttpException } from '@exceptions/HttpException';
-import { CreateUserDto } from '@dtos/users.dto';
+import { UserDto } from '@dtos/users.dto';
 
 class UserService {
   public users = userModel;
@@ -22,7 +22,7 @@ class UserService {
     return findUser;
   }
 
-  public async createUser(userData: CreateUserDto): Promise<User> {
+  public async createUser(userData: UserDto): Promise<User> {
     if (isEmpty(userData)) throw new HttpException(400, 'You\'re not userData');
 
     const findUser: User = await this.users.findOne({ email: userData.email });
@@ -35,7 +35,7 @@ class UserService {
     return createUserData;
   }
 
-  public async updateUser(userId: string, userData: CreateUserDto): Promise<User> {
+  public async updateUser(userId: string, userData: UserDto): Promise<User> {
     if (isEmpty(userId)) throw new HttpException(400, 'You\'re not userId');
 
     if (userData.email) throw new HttpException(400, 'Email cannot be updated.');
