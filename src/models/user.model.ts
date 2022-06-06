@@ -16,9 +16,17 @@ const userSchema: Schema = new Schema({
     type: String,
     required: true,
   },
+  refresh_token: {
+    type: String,
+    required: false,
+  },
   fields: {
     type: [String],
     required: false,
+  },
+  admin: {
+    type: Boolean,
+    default: false,
   },
 });
 
