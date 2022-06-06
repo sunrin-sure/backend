@@ -1,7 +1,6 @@
 import userModel from '@models/user.model';
 import { User } from '@interfaces/users.interface';
 import isEmpty from '@utils/empty';
-import { hash } from 'bcrypt';
 import { HttpException } from '@exceptions/HttpException';
 import { UserDto } from '@dtos/users.dto';
 
