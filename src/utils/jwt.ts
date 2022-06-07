@@ -1,6 +1,6 @@
 import { ACCESS_EXPIRATION, REFRESH_EXPIRATION, SECRET_KEY } from '@config';
 import { User } from '@interfaces/users.interface';
-import { JwtUserPayload } from '@/interfaces/jwt.interface';
+import { JwtUserPayload } from '@interfaces/jwt.interface';
 import jwt from 'jsonwebtoken';
 
 const sign = (user: User) => {
