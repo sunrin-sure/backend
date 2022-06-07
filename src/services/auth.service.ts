@@ -4,12 +4,12 @@ import isEmpty from '@utils/empty';
 import { compareSync, hash } from 'bcrypt';
 import { HttpException } from '@exceptions/HttpException';
 import { UserDto } from '@dtos/users.dto';
-import * as jwt from '@utils/jwt';
+import * as jwt from '@/utils/jwt.utils';
 
 class AuthService {
   public users = userModel;
 
-  public async signup(userData: UserDto): Promise<User> {
+  public async signup(userData: UserDto): Promise<boolean> {
     if (isEmpty(userData)) throw new HttpException(400, 'You\'re not userData');
 
     const findUser: User = await this.users.findOne({ email: userData.email });
@@ -17,9 +17,9 @@ class AuthService {
       throw new HttpException(409, `You're email ${userData.email} already exists`);
     }
     const hashedPassword = await hash(userData.password, 10);
-    const createUserData: User = await this.users.create({ ...userData, password: hashedPassword });
+    const isSuccessCreate: boolean = !isEmpty(await this.users.create({ ...userData, password: hashedPassword }));
 
-    return createUserData;
+    return isSuccessCreate;
   }
 
   public async login(userData: UserDto) {
