@@ -36,9 +36,9 @@ class UsersController {
       const userData: UserDto = req.body;
       let updateUserData: User;
       if (tokenPayload.admin) {
-         updateUserData = await this.userService.updateUser(userId, userData);
+        updateUserData = await this.userService.updateUser(userId, userData);
       } else {
-        if (userId !== tokenPayload.id) next(new HttpException(401, "Token is invalid"));
+        if (userId !== tokenPayload.id) next(new HttpException(401, 'Token is invalid'));
         updateUserData = await this.userService.updateUser(userId, userData);
       }
 
@@ -56,9 +56,9 @@ class UsersController {
       if (tokenPayload.admin) {
         deleteUserData = await this.userService.deleteUser(userId);
       } else {
-        if (userId !== tokenPayload.id) next(new HttpException(401, "Token is invalid"));
+        if (userId !== tokenPayload.id) next(new HttpException(401, 'Token is invalid'));
         deleteUserData = await this.userService.deleteUser(userId);
-      } 
+      }
 
       res.status(200).json({ data: deleteUserData, message: 'deleted' });
     } catch (error) {

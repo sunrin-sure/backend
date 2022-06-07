@@ -17,7 +17,10 @@ class AuthService {
       throw new HttpException(409, `You're email ${userData.email} already exists`);
     }
     const hashedPassword = await hash(userData.password, 10);
-    const isSuccessCreate: boolean = !isEmpty(await this.users.create({ ...userData, password: hashedPassword }));
+    const isSuccessCreate: boolean = !isEmpty(await this.users.create({
+      ...userData,
+      password: hashedPassword,
+    }));
 
     return isSuccessCreate;
   }
