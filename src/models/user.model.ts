@@ -15,6 +15,7 @@ const userSchema: Schema = new Schema({
   password: {
     type: String,
     required: true,
+    select: false,
   },
   refresh_token: {
     type: String,
