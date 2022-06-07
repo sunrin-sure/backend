@@ -24,8 +24,8 @@ class UserService {
   public async updateUser(userId: string, userData: UserDto): Promise<User> {
     if (isEmpty(userId)) throw new HttpException(400, 'You\'re not userId');
 
-    if (userData.email) throw new HttpException(400, 'Email cannot be updated.');
-    if (userData.password) throw new HttpException(400, 'Password cannot be updated.');
+    if (userData.email) throw new HttpException(400, 'Email cannot be updated');
+    if (userData.password) throw new HttpException(400, 'Password cannot be updated');
 
     const updateUserById: User = await this.users.findByIdAndUpdate(userId, userData, { returnDocument: 'after' });
     if (!updateUserById) throw new HttpException(409, 'You\'re not user');
