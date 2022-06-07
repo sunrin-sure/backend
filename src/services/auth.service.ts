@@ -4,7 +4,7 @@ import isEmpty from '@utils/empty';
 import { compareSync, hash } from 'bcrypt';
 import { HttpException } from '@exceptions/HttpException';
 import { UserDto } from '@dtos/users.dto';
-import * as jwt from '@/utils/jwt.utils';
+import * as jwt from '@utils/jwt.utils';
 
 class AuthService {
   public users = userModel;
