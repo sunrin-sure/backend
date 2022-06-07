@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { HttpException } from '@exceptions/HttpException';
 
-import { verify } from '@utils/jwt';
+import { verify } from '@utils/jwt.utils';
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (req.headers.authorization) {
@@ -13,6 +13,8 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     } else {
       next(new HttpException(401, result.message));
     }
+  } else {
+    next(new HttpException(401, 'Token is empty'));
   }
 };
 
