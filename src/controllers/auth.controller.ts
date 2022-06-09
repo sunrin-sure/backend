@@ -27,6 +27,18 @@ class AuthController {
       next(error);
     }
   };
+
+  public refresh = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const jwtUserId = req.jwtPayload.id;
+      const refreshToken = req.cookies.refreshToken;
+      const newJwtToken = await this.authService.refresh(jwtUserId, refreshToken);
+
+      res.status(200).json({ data: newJwtToken, message: 'refresh new token' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default AuthController;

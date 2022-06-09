@@ -5,6 +5,7 @@ import { compareSync, hash } from 'bcrypt';
 import { HttpException } from '@exceptions/HttpException';
 import { UserDto } from '@dtos/users.dto';
 import * as jwt from '@utils/jwt.utils';
+import { R_SECRET_KEY } from '@config';
 
 class AuthService {
   public users = userModel;
@@ -42,15 +43,30 @@ class AuthService {
     const isCompare: boolean = compareSync(userData.password, findUser.password);
     if (!isCompare) throw new HttpException(401, 'Incorrect password');
 
-    const accessToken = jwt.sign(findUser);
-    const refreshToken = jwt.refresh();
+    const accessTokenAndCookie = jwt.sign({ id: findUser._id, admin: findUser.admin });
+    const refreshTokenAndCookie = jwt.refresh({ id: findUser._id });
 
-    const userRefreshToken = { refresh_token: refreshToken } as User;
+    const userRefreshToken = { refresh_token: refreshTokenAndCookie.token } as User;
 
     const updateRefreshToken = await this.users.findByIdAndUpdate(findUser._id, userRefreshToken, { returnDocument: 'after' });
     if (!updateRefreshToken) throw new HttpException(409, 'You\'re not user');
 
-    return { accessToken, refreshToken };
+    return { accessTokenAndCookie, refreshTokenAndCookie };
+  }
+
+  public async refresh(userId: string, refreshToken: string) {
+    if (isEmpty(userId)) throw new HttpException(400, 'You\'re not userId');
+
+    const findUser: User = await this.users.findById(userId).select({ _id: 1, admin: 1, refresh_token: 1 });
+    if (!findUser) throw new HttpException(401, 'You have not refresh token');
+
+    const refreshDecodedToken = jwt.verify(refreshToken, R_SECRET_KEY);
+    if (refreshDecodedToken instanceof HttpException) throw refreshDecodedToken;
+
+    if (findUser.refresh_token !== refreshToken || userId !== refreshDecodedToken.id) throw new HttpException(401, 'Invalid refresh token');
+    const accessTokenAndCookie = jwt.sign({ id: findUser._id, admin: findUser.admin });
+
+    return accessTokenAndCookie;
   }
 }
 
