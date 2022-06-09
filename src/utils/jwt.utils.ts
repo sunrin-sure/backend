@@ -1,51 +1,49 @@
-import { ACCESS_EXPIRATION, REFRESH_EXPIRATION, SECRET_KEY } from '@config';
-import { User } from '@interfaces/users.interface';
+import { ACCESS_EXPIRATION, REFRESH_EXPIRATION, R_SECRET_KEY, SECRET_KEY } from '@config';
 import { JwtUserPayload } from '@interfaces/jwt.interface';
 import jwt from 'jsonwebtoken';
+import { HttpException } from '@exceptions/HttpException';
+import { CookieOptions } from 'express';
+import getCookieTime from './cookie.utils';
 
-const sign = (user: User) => {
-  const payload = {
-    id: user._id,
-    admin: user.admin,
-  };
-
+const sign = (payload: JwtUserPayload) => {
   const token = jwt.sign(payload, SECRET_KEY, {
     algorithm: 'HS256',
     expiresIn: ACCESS_EXPIRATION,
   });
 
-  return token;
+  const accessTokenCookieOptions: CookieOptions = {
+    expires: getCookieTime(ACCESS_EXPIRATION, 'expires'),
+    maxAge: getCookieTime(ACCESS_EXPIRATION, 'maxage'),
+    httpOnly: true,
+    sameSite: 'lax',
+  };
+
+  return { token, accessTokenCookieOptions };
 };
 
-const verify = (token: string) => {
+const verify = (token: string, secretKey: string) => {
   try {
-    const decoded = jwt.verify(token, SECRET_KEY) as JwtUserPayload;
-    return { ok: true, payload: decoded };
+    const decoded = jwt.verify(token, secretKey) as JwtUserPayload;
+    return decoded;
   } catch (error) {
-    return { ok: false, message: error.message };
+    return new HttpException(401, error);
   }
 };
 
-const refresh = () => {
-  const token = jwt.sign({}, SECRET_KEY, {
+const refresh = (payload: JwtUserPayload) => {
+  const token = jwt.sign(payload, R_SECRET_KEY, {
     algorithm: 'HS256',
     expiresIn: REFRESH_EXPIRATION,
   });
 
-  return token;
-};
+  const refreshTokenCookieOptions: CookieOptions = {
+    expires: getCookieTime(REFRESH_EXPIRATION, 'expires'),
+    maxAge: getCookieTime(REFRESH_EXPIRATION, 'maxage'),
+    httpOnly: true,
+    sameSite: 'lax',
+  };
 
-// const refreshVerify = (token: string, userId: string) => {
-//   const users = userModel;
-//   try {
-//     const findUser: User = users.findById(userId);
-//     const _token = findUser.refresh_token;
-
-//     if (token === _token) jwt.verify(token, SECRET_KEY);
-//     return true;
-//   } catch (error) {
-//     return false;
-//   }
-// }
+  return { token, refreshTokenCookieOptions };
+}
 
 export { sign, verify, refresh };
