@@ -1,4 +1,4 @@
 export interface JwtUserPayload {
   id: string;
-  admin: boolean;
+  admin?: boolean;
 }
