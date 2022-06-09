@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
 import { connect, ConnectOptions, set } from 'mongoose';
 
 import {
@@ -54,6 +55,7 @@ class App {
     this.app.use(morgan(LOG_FORMAT, { stream }));
     this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
     this.app.use(helmet());
+    this.app.use(cookieParser());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
   }
