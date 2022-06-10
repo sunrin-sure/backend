@@ -22,14 +22,8 @@ class AuthController {
       const userData: UserDto = req.body;
       const jwtTokenAndCookies = await this.authService.login(userData);
 
-      res.cookie('access_token', jwtTokenAndCookies.tokens.accessToken, jwtTokenAndCookies.cookieOptions.accessCookie);
-      res.cookie('refresh_token', jwtTokenAndCookies.tokens.refreshToken, jwtTokenAndCookies.cookieOptions.refreshCookie);
-      res.cookie('logged_in', true, {
-        ...jwtTokenAndCookies.cookieOptions.accessCookie,
-        httpOnly: false,
-      });
-      
-      res.status(200).json({ data: jwtTokenAndCookies.tokens, message: 'login' });
+      res.cookie('refresh_token', jwtTokenAndCookies.token.refreshToken, jwtTokenAndCookies.refreshTokenCookieOptions);
+      res.status(200).json({ data: jwtTokenAndCookies.token, message: 'login' });
     } catch (error) {
       next(error);
     }
@@ -42,6 +36,7 @@ class AuthController {
       res.cookie('logged_in', '', {
         maxAge: 1,
       });
+      res.status(200).json({ data: true, message: 'logout' });
     } catch (error) {
       next(error);
     }
@@ -49,11 +44,10 @@ class AuthController {
 
   public refresh = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const jwtUserId = req.jwtPayload.id;
-      const refreshToken = req.cookies.refreshToken;
-      const newJwtToken = await this.authService.refresh(jwtUserId, refreshToken);
+      const refreshToken = req.cookies.refresh_token;
+      const newAccessToken = await this.authService.refresh(refreshToken);
 
-      res.status(200).json({ data: newJwtToken, message: 'refresh new token' });
+      res.status(200).json({ data: { accessToken: newAccessToken }, message: 'refresh new token' });
     } catch (error) {
       next(error);
     }

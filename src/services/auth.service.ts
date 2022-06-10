@@ -43,40 +43,28 @@ class AuthService {
     const isCompare: boolean = compareSync(userData.password, findUser.password);
     if (!isCompare) throw new HttpException(401, 'Incorrect password');
 
-    const accessTokenAndCookie = jwt.sign({ id: findUser._id, admin: findUser.admin });
-    const refreshTokenAndCookie = jwt.refresh({ id: findUser._id });
+    const accessToken = jwt.sign({ id: findUser._id, admin: findUser.admin });
+    const { refreshToken, refreshTokenCookieOptions } = jwt.refresh({ id: findUser._id });
 
-    const tokens = {
-      accessToken: accessTokenAndCookie.token,
-      refreshToken: refreshTokenAndCookie.token
-    };
-
-    const cookieOptions = { 
-      accessCookie: accessTokenAndCookie.accessTokenCookieOptions,
-      refreshCookie: refreshTokenAndCookie.refreshTokenCookieOptions
-    };
-
-    const userRefreshToken = { refresh_token: tokens.refreshToken } as User;
+    const userRefreshToken = { refresh_token: refreshToken } as User;
 
     const updateRefreshToken = await this.users.findByIdAndUpdate(findUser._id, userRefreshToken, { returnDocument: 'after' });
     if (!updateRefreshToken) throw new HttpException(409, 'You\'re not user');
 
-    return { tokens, cookieOptions };
+    return { token: { accessToken, refreshToken }, refreshTokenCookieOptions };
   }
 
-  public async refresh(userId: string, refreshToken: string) {
-    if (isEmpty(userId)) throw new HttpException(400, 'You\'re not userId');
+  public async refresh(refreshToken: string) {
+    const findUser: User = await this.users.findOne({ where: { refresh_token: refreshToken } }).select({ _id: 1, admin: 1, refresh_token: 1 });
+    if (!findUser) throw new HttpException(401, 'You don\'t have refresh token');
 
-    const findUser: User = await this.users.findById(userId).select({ _id: 1, admin: 1, refresh_token: 1 });
-    if (!findUser) throw new HttpException(401, 'You have not refresh token');
-
-    const refreshDecodedToken = jwt.verify(refreshToken, R_SECRET_KEY);
+    const refreshDecodedToken = jwt.verify(findUser.refresh_token, R_SECRET_KEY);
     if (refreshDecodedToken instanceof HttpException) throw refreshDecodedToken;
 
-    if (findUser.refresh_token !== refreshToken || userId !== refreshDecodedToken.id) throw new HttpException(401, 'Invalid refresh token');
-    const accessTokenAndCookie = jwt.sign({ id: findUser._id, admin: findUser.admin });
+    if (findUser._id.toString() !== refreshDecodedToken.id) throw new HttpException(401, 'Invalid refresh token');
+    const newAccessTokenAndCookie = jwt.sign({ id: findUser._id, admin: findUser.admin });
 
-    return accessTokenAndCookie;
+    return newAccessTokenAndCookie;
   }
 }
 
