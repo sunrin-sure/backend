@@ -11,14 +11,7 @@ const sign = (payload: JwtUserPayload) => {
     expiresIn: ACCESS_EXPIRATION,
   });
 
-  const accessTokenCookieOptions: CookieOptions = {
-    expires: getCookieTime(ACCESS_EXPIRATION, 'expires'),
-    maxAge: getCookieTime(ACCESS_EXPIRATION, 'maxage'),
-    httpOnly: true,
-    sameSite: 'lax',
-  };
-
-  return { token, accessTokenCookieOptions };
+  return token;
 };
 
 const verify = (token: string, secretKey: string) => {
@@ -43,7 +36,7 @@ const refresh = (payload: JwtUserPayload) => {
     sameSite: 'lax',
   };
 
-  return { token, refreshTokenCookieOptions };
+  return { refreshToken: token, refreshTokenCookieOptions: refreshTokenCookieOptions };
 }
 
 export { sign, verify, refresh };
