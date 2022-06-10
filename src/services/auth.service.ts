@@ -46,12 +46,22 @@ class AuthService {
     const accessTokenAndCookie = jwt.sign({ id: findUser._id, admin: findUser.admin });
     const refreshTokenAndCookie = jwt.refresh({ id: findUser._id });
 
-    const userRefreshToken = { refresh_token: refreshTokenAndCookie.token } as User;
+    const tokens = {
+      accessToken: accessTokenAndCookie.token,
+      refreshToken: refreshTokenAndCookie.token
+    };
+
+    const cookieOptions = { 
+      accessCookie: accessTokenAndCookie.accessTokenCookieOptions,
+      refreshCookie: refreshTokenAndCookie.refreshTokenCookieOptions
+    };
+
+    const userRefreshToken = { refresh_token: tokens.refreshToken } as User;
 
     const updateRefreshToken = await this.users.findByIdAndUpdate(findUser._id, userRefreshToken, { returnDocument: 'after' });
     if (!updateRefreshToken) throw new HttpException(409, 'You\'re not user');
 
-    return { accessTokenAndCookie, refreshTokenAndCookie };
+    return { tokens, cookieOptions };
   }
 
   public async refresh(userId: string, refreshToken: string) {

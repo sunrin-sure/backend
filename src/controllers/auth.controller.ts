@@ -20,9 +20,9 @@ class AuthController {
   public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: UserDto = req.body;
-      const jwtToken = await this.authService.login(userData);
-
-      res.status(200).json({ data: jwtToken, message: 'login' });
+      const jwtTokenAndCookies = await this.authService.login(userData);
+      
+      res.status(200).json({ data: jwtTokenAndCookies.tokens, message: 'login' });
     } catch (error) {
       next(error);
     }
