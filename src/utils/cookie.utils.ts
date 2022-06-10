@@ -13,7 +13,7 @@ const getCookieTime = (time: string, type: 'expires' | 'maxage') => {
 
     let result;
     if (type === 'expires') {
-        result = new Date(Date.now() + seconds * 1000);
+        result = new Date(Date.now() + (seconds * 1000));
     } else if (type === 'maxage') {
         result = seconds * 1000;
     }
