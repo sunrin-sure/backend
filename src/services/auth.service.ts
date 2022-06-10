@@ -10,7 +10,7 @@ import { R_SECRET_KEY } from '@config';
 class AuthService {
   public users = userModel;
 
-  public async signup(userData: UserDto): Promise<boolean> {
+  public async register(userData: UserDto): Promise<boolean> {
     if (isEmpty(userData)) throw new HttpException(400, 'You\'re not userData');
 
     const findUser: User = await this.users.findOne({ email: userData.email });

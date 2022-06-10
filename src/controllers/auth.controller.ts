@@ -6,12 +6,12 @@ import { UserDto } from '@dtos/users.dto';
 class AuthController {
   public authService = new AuthService();
 
-  public signup = async (req: Request, res: Response, next: NextFunction) => {
+  public register = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: UserDto = req.body;
-      const signUpResult: boolean = await this.authService.signup(userData);
+      const registerResult: boolean = await this.authService.register(userData);
 
-      res.status(201).json({ data: signUpResult, message: 'signup' });
+      res.status(201).json({ data: registerResult, message: 'register' });
     } catch (error) {
       next(error);
     }
