@@ -54,6 +54,13 @@ class AuthService {
     return { token: { accessToken, refreshToken }, refreshTokenCookieOptions };
   }
 
+  public async logout(userId: string) {
+    if (isEmpty(userId)) throw new HttpException(400, 'You\'re not user');
+    const findUser: User = await this.users.findByIdAndUpdate(userId, { refresh_token: '' }, { returnDocument: 'after' });
+
+    return findUser;
+  }
+
   public async refresh(refreshToken: string) {
     const findUser: User = await this.users.findOne({ where: { refresh_token: refreshToken } }).select({ _id: 1, admin: 1, refresh_token: 1 });
     if (!findUser) throw new HttpException(401, 'You don\'t have refresh token');
