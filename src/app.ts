@@ -36,6 +36,11 @@ class App {
     this.app.listen(this.port, () => {
       logger.info(`ENV : ${this.env}`);
       logger.info(`App listening on the port ${this.port}`);
+
+      if (process.send) {
+        process.send('ready');
+        console.log('success');
+      }
     });
   }
 
