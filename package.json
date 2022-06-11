@@ -6,6 +6,8 @@
   "author": "hyangSu <20sunrin007@sunrint.hs.kr>",
   "license": "MIT",
   "scripts": {
+    "deploy:prod": "yarn build && yarn pm2 start ecosystem.config.js --only prod",
+    "deploy:dev": "yarn pm2 start ecosystem.config.js --only dev",
     "start": "yarn build && NODE_ENV=production node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/server.js",
     "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
     "build": "tsc",
@@ -50,6 +52,7 @@
     "eslint": "^8.17.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
+    "pm2": "^5.2.0",
     "ts-node": "^10.8.1",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.0.0",
