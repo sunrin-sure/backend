@@ -10,7 +10,7 @@
     "deploy:dev": "yarn pm2 start ecosystem.config.js --only dev",
     "start": "yarn build && NODE_ENV=production node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/server.js",
     "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
-    "build": "tsc",
+    "build": "swc src -d dist --source-maps --copy-files",
     "test": "NODE_ENV=test yarn mocha",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "yarn lint -- --fix"
@@ -36,6 +36,8 @@
     "winston-daily-rotate-file": "^4.7.1"
   },
   "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.198",
     "@types/bcrypt": "^5.0.0",
     "@types/chai": "^4.3.1",
     "@types/cookie-parser": "^1.4.3",
