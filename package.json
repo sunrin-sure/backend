@@ -9,13 +9,12 @@
     "start": "yarn build && NODE_ENV=production node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/server.js",
     "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
     "build": "tsc",
-    "test": "yarn mocha",
+    "test": "NODE_ENV=test yarn mocha",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "yarn lint -- --fix"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "chai": "^4.3.6",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "cookie-parser": "^1.4.6",
