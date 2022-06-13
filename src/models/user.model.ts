@@ -20,6 +20,7 @@ const userSchema: Schema = new Schema({
   refresh_token: {
     type: String,
     required: false,
+    select: false,
   },
   fields: {
     type: [String],
