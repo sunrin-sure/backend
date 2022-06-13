@@ -37,10 +37,7 @@ class App {
       logger.info(`ENV : ${this.env}`);
       logger.info(`App listening on the port ${this.port}`);
 
-      if (process.send) {
-        process.send('ready');
-        console.log('success');
-      }
+      if (process.send) process.send('ready');
     });
   }
 
