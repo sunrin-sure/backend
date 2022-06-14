@@ -38,8 +38,8 @@ class UsersController {
       if (tokenPayload.admin) {
         updateUserData = await this.userService.updateUser(userId, userData);
       } else {
-        if (userId !== tokenPayload.id) next(new HttpException(401, 'Token is invalid'));
-        updateUserData = await this.userService.updateUser(userId, userData);
+        if (!tokenPayload.id) next(new HttpException(401, 'Token is invalid'));
+        updateUserData = await this.userService.updateUser(tokenPayload.id, userData);
       }
 
       res.status(200).json({ data: updateUserData, message: 'updated' });
