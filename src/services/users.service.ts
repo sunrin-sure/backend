@@ -8,7 +8,7 @@ class UserService {
   public users = userModel;
 
   public async findAllUser(): Promise<User[]> {
-    const users: User[] = await this.users.find().select({ _id: 1, username: 1, fields: 1 });
+    const users: User[] = await this.users.find().select({ _id: 1, username: 1, fields: 1, stacks: 1 });
     return users;
   }
 
