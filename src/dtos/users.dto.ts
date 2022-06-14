@@ -21,7 +21,9 @@ export class UserDto {
   )
   public password: string;
 
-  @IsEnum(JobTypes, { each: true })
+  @IsEnum(JobTypes, { 
+    each: true,
+    message: "the job you entered does not exist in the database" })
   public fields: JobTypes[];
 
   @IsArray()
