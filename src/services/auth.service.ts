@@ -62,7 +62,10 @@ class AuthService {
   }
 
   public async refresh(refreshToken: string) {
-    const findUser: User = await this.users.findOne({ where: { refresh_token: refreshToken } }).select({ _id: 1, admin: 1, refresh_token: 1 });
+    const findUser: User = await this.users.findOne({
+      where: { refresh_token: refreshToken },
+    })
+      .select({ _id: 1, admin: 1, refresh_token: 1 });
     if (!findUser) throw new HttpException(401, 'You don\'t have refresh token');
 
     const refreshDecodedToken = jwt.verify(findUser.refresh_token, R_SECRET_KEY);

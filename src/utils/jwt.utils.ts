@@ -1,4 +1,6 @@
-import { ACCESS_EXPIRATION, REFRESH_EXPIRATION, R_SECRET_KEY, SECRET_KEY } from '@config';
+import {
+  ACCESS_EXPIRATION, REFRESH_EXPIRATION, R_SECRET_KEY, SECRET_KEY,
+} from '@config';
 import { JwtUserPayload } from '@interfaces/jwt.interface';
 import jwt from 'jsonwebtoken';
 import { HttpException } from '@exceptions/HttpException';
@@ -36,7 +38,7 @@ const refresh = (payload: JwtUserPayload) => {
     sameSite: 'lax',
   };
 
-  return { refreshToken: token, refreshTokenCookieOptions: refreshTokenCookieOptions };
-}
+  return { refreshToken: token, refreshTokenCookieOptions };
+};
 
 export { sign, verify, refresh };

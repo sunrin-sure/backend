@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 
 import AuthService from '@services/auth.service';
 import { UserDto } from '@dtos/users.dto';
-import { JwtUserPayload } from '@interfaces/jwt.interface';
 
 class AuthController {
   public authService = new AuthService();
@@ -34,7 +33,7 @@ class AuthController {
     try {
       const userId: string = req.jwtPayload.id;
       await this.authService.logout(userId);
-      
+
       res.cookie('refresh_token', '', { maxAge: 1 });
       res.status(200).json({ data: true, message: 'logout' });
     } catch (error) {
