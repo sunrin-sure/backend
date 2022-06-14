@@ -1,5 +1,6 @@
 import { model, Schema, Document } from 'mongoose';
 import { User } from '@interfaces/users.interface';
+import { JobType } from '@types/users/user.job.type';
 
 const userSchema: Schema = new Schema({
   username: {
@@ -17,14 +18,18 @@ const userSchema: Schema = new Schema({
     required: true,
     select: false,
   },
+  fields: {
+    type: [JobType],
+    required: false,
+  },
+  stacks: {
+    type: [String],
+    required: false,
+  },
   refresh_token: {
     type: String,
     required: false,
     select: false,
-  },
-  fields: {
-    type: [String],
-    required: false,
   },
   admin: {
     type: Boolean,
