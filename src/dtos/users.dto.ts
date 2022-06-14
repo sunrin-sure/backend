@@ -1,8 +1,6 @@
-import 'reflect-metadata';
-import { JobType } from '@types/users/user.job.type';
-import { Type } from 'class-transformer';
+import { JobTypes } from '@types/users/user.job.type';
 import {
-  IsArray, IsEmail, IsString, Matches, ValidateNested,
+  IsArray, IsEmail, IsEnum, IsString, Matches,
 } from 'class-validator';
 
 export class UserDto {
@@ -23,9 +21,8 @@ export class UserDto {
   )
   public password: string;
 
-  @ValidateNested({ each: true })
-  @Type(() => JobType)
-  public fields: JobType[];
+  @IsEnum(JobTypes, { each: true })
+  public fields: JobTypes[];
 
   @IsArray()
   public stacks: string[];

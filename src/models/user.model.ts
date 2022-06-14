@@ -1,6 +1,7 @@
 import { model, Schema, Document } from 'mongoose';
 import { User } from '@interfaces/users.interface';
-import { JobType } from '@types/users/user.job.type';
+import { JobNames } from '@types/users/user.job.type';
+import { JobTypes } from '@/types/users/user.job.type';
 
 const userSchema: Schema = new Schema({
   username: {
@@ -19,7 +20,8 @@ const userSchema: Schema = new Schema({
     select: false,
   },
   fields: {
-    type: [JobType],
+    type: [String],
+    enum: JobTypes,
     required: false,
   },
   stacks: {
