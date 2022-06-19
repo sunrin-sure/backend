@@ -6,6 +6,9 @@ import cookieParser from 'cookie-parser';
 import { connect, ConnectOptions, set } from 'mongoose';
 
 import {
+  CLOUD_API_KEY,
+  CLOUD_NAME,
+  CLOUD_API_SECRET,
   CREDENTIALS, LOG_FORMAT, NODE_ENV, ORIGIN, PORT,
 } from '@config/env.config';
 import { Routes } from '@interfaces/routes.interface';
@@ -13,7 +16,7 @@ import { logger, stream } from '@utils/logger';
 import errorMiddleware from '@middlewares/error.middleware';
 
 import { dbConnection } from '@config/database.config';
-import { connectCloudinary } from '@config/cloudinary.config';
+import { v2 } from 'cloudinary';
 
 class App {
   public app: express.Application;
@@ -55,8 +58,13 @@ class App {
     connect(dbConnection.url, dbConnection.options as ConnectOptions);
   }
 
+  // eslint-disable-next-line
   private connectToCloudinary() {
-    connectCloudinary();
+    v2.config({
+      cloud_name: CLOUD_NAME,
+      api_key: CLOUD_API_KEY,
+      api_secret: CLOUD_API_SECRET,
+    });
   }
 
   private initializeMiddlewares() {
