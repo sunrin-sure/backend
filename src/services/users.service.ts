@@ -43,7 +43,7 @@ class UserService {
     return deleteUserById;
   }
 
-  public async uploadUserAvatar(userId: string, fileData: Express.Multer.File) {
+  public async uploadUserAvatar(userId: string, fileData: Express.Multer.File): Promise<User> {
     const cloudinary = new CloudinaryService(fileData);
     const result = await cloudinary.uploadImage();
     if (result instanceof HttpException) throw result;
