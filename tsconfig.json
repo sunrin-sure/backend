@@ -32,7 +32,6 @@
       "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],
       "@utils/*": ["utils/*"],
-      "@types/*": ["types/*"],
       "@dtos/*": ["dtos/*"]
     }
   },

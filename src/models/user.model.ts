@@ -1,6 +1,5 @@
 import { model, Schema, Document } from 'mongoose';
 import { User } from '@interfaces/users.interface';
-import { JobNames } from '@types/users/user.job.type';
 import { JobTypes } from '@/types/users/user.job.type';
 
 const userSchema: Schema = new Schema({
