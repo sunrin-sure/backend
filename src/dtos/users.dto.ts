@@ -1,4 +1,4 @@
-import { JobTypes } from '@types/users/user.job.type';
+import { JobTypes, JobNames } from '@/types/users/user.job.type';
 import {
   IsArray, IsEmail, IsEnum, IsString, Matches,
 } from 'class-validator';
@@ -24,7 +24,7 @@ export class UserDto {
   @IsEnum(JobTypes, { 
     each: true,
     message: "the job you entered does not exist in the database" })
-  public fields: JobTypes[];
+  public fields: JobNames[];
 
   @IsArray()
   public stacks: string[];
