@@ -5,6 +5,7 @@ export interface User {
   username: string;
   email: string;
   password: string;
+  avatar: string;
   fields: JobNames[];
   stacks: string[];
   refresh_token: string;

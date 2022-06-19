@@ -1,5 +1,6 @@
 import { model, Schema, Document } from 'mongoose';
 import { User } from '@interfaces/users.interface';
+import { DEFAULT_AVATAR } from '@config/env.config';
 import { JobTypes } from '@/types/users/user.job.type';
 
 const userSchema: Schema = new Schema({
@@ -18,14 +19,20 @@ const userSchema: Schema = new Schema({
     required: true,
     select: false,
   },
+  avatar: {
+    type: String,
+    required: false,
+    default: DEFAULT_AVATAR,
+    select: false,
+  },
   fields: {
     type: [String],
     enum: JobTypes,
-    required: false,
+    required: true,
   },
   stacks: {
     type: [String],
-    required: false,
+    required: true,
   },
   refresh_token: {
     type: String,

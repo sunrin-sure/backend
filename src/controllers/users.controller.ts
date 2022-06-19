@@ -65,6 +65,20 @@ class UsersController {
       next(error);
     }
   };
+
+  public uploadUserAvatar = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      if (!req.file) next(new HttpException(400, 'Empty File'));
+      const fileData: Express.Multer.File = req.file;
+      const userId: string = req.jwtPayload.id;
+
+      const data = await this.userService.uploadUserAvatar(userId, fileData);
+
+      res.status(201).json({ data, message: 'updated avatar' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default UsersController;

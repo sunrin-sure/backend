@@ -3,12 +3,15 @@ import { User } from '@interfaces/users.interface';
 import isEmpty from '@utils/empty';
 import { HttpException } from '@exceptions/HttpException';
 import { UserDto } from '@dtos/users.dto';
+import { CloudinaryService } from './cloudinary.service';
 
 class UserService {
   public users = userModel;
 
   public async findAllUser(): Promise<User[]> {
-    const users: User[] = await this.users.find().select({ _id: 1, username: 1, fields: 1, stacks: 1 });
+    const users: User[] = await this.users.find().select({
+      _id: 1, username: 1, fields: 1, stacks: 1,
+    });
     return users;
   }
 
@@ -27,7 +30,7 @@ class UserService {
     if (userData.email) throw new HttpException(400, 'Email cannot be updated');
     if (userData.password) throw new HttpException(400, 'Password cannot be updated');
 
-    const updateUserById: User = await this.users.findByIdAndUpdate(userId, userData, { returnDocument: 'after' });
+    const updateUserById: User = await this.users.findByIdAndUpdate(userId, { $set: userData }, { returnDocument: 'after' });
     if (!updateUserById) throw new HttpException(409, 'You\'re not user');
 
     return updateUserById;
@@ -38,6 +41,17 @@ class UserService {
     if (!deleteUserById) throw new HttpException(409, 'You\'re not user');
 
     return deleteUserById;
+  }
+
+  public async uploadUserAvatar(userId: string, fileData: Express.Multer.File) {
+    const cloudinary = new CloudinaryService(fileData);
+    const result = await cloudinary.uploadImage();
+    if (result instanceof HttpException) throw result;
+
+    const addAvatarInUser: User = await this.users.findByIdAndUpdate(userId, { $set: { avatar: result.url } }, { returnDocument: 'after' });
+    if (!addAvatarInUser) throw new HttpException(409, 'You\'re not user');
+
+    return addAvatarInUser;
   }
 }
 
