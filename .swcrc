@@ -21,7 +21,7 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"],
-      "@config": ["config"],
+      "@config/*": ["config/*"],
       "@controllers/*": ["controllers/*"],
       "@exceptions/*": ["exceptions/*"],
       "@interfaces/*": ["interfaces/*"],
@@ -31,7 +31,6 @@
       "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],
       "@utils/*": ["utils/*"],
-      "@types/*": ["types/*"],
       "@dtos/*": ["dtos/*"]
     }
   },
