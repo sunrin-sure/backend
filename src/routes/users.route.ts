@@ -23,10 +23,10 @@ class UsersRoute implements Routes {
   private initializeRoutes() {
     this.router.get(`${this.path}`, authMiddleware, this.usersController.getUsers);
     this.router.get(`${this.path}/:id`, authMiddleware, this.usersController.getUserById);
-    this.router.put(`${this.path}`, [authMiddleware, validationMiddleware(UserDto, 'body', true)], this.usersController.updateUser);
-    this.router.put(`${this.path}/:id`, [authMiddleware, validationMiddleware(UserDto, 'body', true)], this.usersController.updateUser);
+    this.router.patch(`${this.path}`, [authMiddleware, validationMiddleware(UserDto, 'body', true)], this.usersController.updateUser);
+    this.router.patch(`${this.path}/:id`, [authMiddleware, validationMiddleware(UserDto, 'body', true)], this.usersController.updateUser);
     this.router.delete(`${this.path}/:id`, authMiddleware, this.usersController.deleteUser);
-    this.router.post(`${this.path}/upload`, [authMiddleware, this.upload.single('avatar')], this.usersController.uploadUserAvatar);
+    this.router.patch(`${this.path}/upload`, [authMiddleware, this.upload.single('avatar')], this.usersController.uploadUserAvatar);
   }
 }
 
