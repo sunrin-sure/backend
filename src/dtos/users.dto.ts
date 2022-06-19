@@ -1,12 +1,12 @@
-import { JobTypes, JobNames } from '@/types/users/user.job.type';
 import {
-  IsArray, IsEmail, IsEnum, IsString, Matches,
+  IsArray, IsEmail, IsEnum, IsOptional, IsString, IsUrl, Matches,
 } from 'class-validator';
+import { JobTypes, JobNames } from '@/types/users/user.job.type';
 
 export class UserDto {
   @IsString()
   @Matches(
-    /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{1,10}/,
+    /^[a-zA-Zㄱ-ㅎ가-힣0-9]([._-](?![._-])|[a-zA-Zㄱ-ㅎ가-힣0-9]){1,10}[a-zA-Zㄱ-ㅎ가-힣0-9]$/,
     { message: 'username must match regular expression' },
   )
   public username: string;
@@ -16,14 +16,19 @@ export class UserDto {
 
   @IsString()
   @Matches(
-    /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
+    /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,}$/,
     { message: 'password must match regular expression' },
   )
   public password: string;
 
-  @IsEnum(JobTypes, { 
+  @IsUrl()
+  @IsOptional()
+  public avatar: string;
+
+  @IsEnum(JobTypes, {
     each: true,
-    message: "the job you entered does not exist in the database" })
+    message: 'the job you entered does not exist in the database',
+  })
   public fields: JobNames[];
 
   @IsArray()
