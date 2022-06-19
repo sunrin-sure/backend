@@ -44,7 +44,7 @@ const userSchema: Schema = new Schema({
     default: false,
     select: false,
   },
-});
+}, { timestamps: true });
 
 const userModel = model<User & Document>('User', userSchema);
 
