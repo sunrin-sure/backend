@@ -7,12 +7,13 @@ import { connect, ConnectOptions, set } from 'mongoose';
 
 import {
   CREDENTIALS, LOG_FORMAT, NODE_ENV, ORIGIN, PORT,
-} from '@config';
+} from '@config/env.config';
 import { Routes } from '@interfaces/routes.interface';
 import { logger, stream } from '@utils/logger';
 import errorMiddleware from '@middlewares/error.middleware';
 
-import { dbConnection } from '@databases';
+import { dbConnection } from '@config/database.config';
+import { connectCloudinary } from '@config/cloudinary.config';
 
 class App {
   public app: express.Application;
@@ -27,6 +28,7 @@ class App {
     this.port = PORT || 3000;
 
     this.connectToDatabase();
+    this.connectToCloudinary();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeErrorHandler();
@@ -51,6 +53,10 @@ class App {
     }
 
     connect(dbConnection.url, dbConnection.options as ConnectOptions);
+  }
+
+  private connectToCloudinary() {
+    connectCloudinary();
   }
 
   private initializeMiddlewares() {
