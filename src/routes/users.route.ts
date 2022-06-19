@@ -4,6 +4,8 @@ import { Routes } from '@interfaces/routes.interface';
 import validationMiddleware from '@middlewares/validation.middleware';
 import { UserDto } from '@dtos/users.dto';
 import authMiddleware from '@middlewares/auth.middleware';
+import multer from 'multer';
+import { multerConfig } from '@config/multer.config';
 
 class UsersRoute implements Routes {
   public path = '/users';
@@ -11,6 +13,8 @@ class UsersRoute implements Routes {
   public router = Router();
 
   public usersController = new UsersController();
+
+  public upload = multer(multerConfig);
 
   constructor() {
     this.initializeRoutes();
@@ -22,6 +26,7 @@ class UsersRoute implements Routes {
     this.router.put(`${this.path}`, [authMiddleware, validationMiddleware(UserDto, 'body', true)], this.usersController.updateUser);
     this.router.put(`${this.path}/:id`, [authMiddleware, validationMiddleware(UserDto, 'body', true)], this.usersController.updateUser);
     this.router.delete(`${this.path}/:id`, authMiddleware, this.usersController.deleteUser);
+    this.router.post(`${this.path}/upload`, [authMiddleware, this.upload.single('avatar')], this.usersController.uploadUserAvatar);
   }
 }
 
