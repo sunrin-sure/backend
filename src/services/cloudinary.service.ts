@@ -14,7 +14,7 @@ export class CloudinaryService {
         return resolve(result);
       });
 
-      fs.createReadStream(this.file.buffer).pipe(upload);
+      fs.createReadStream(this.file.path).pipe(upload);
     });
   }
 }
