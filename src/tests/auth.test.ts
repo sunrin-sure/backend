@@ -19,7 +19,7 @@ describe('Auth Test', () => {
         .send({
           username: 'test  test',
           email: 'test@example.com',
-          password: 'test',
+          password: 'test1234',
           fields: ['backend'],
           stacks: ['typescript'],
         })
