@@ -1,15 +1,15 @@
 type ReadonlyRecord<K extends string, V> = Readonly<Record<K, V>>;
 
-export type JobNames = 'frontend'  |
-                       'backend'   |
+export type JobNames = 'frontend' |
+                       'backend' |
                        'fullstack' |
-                       'desgin'    |
-                       'planner'   ;
-                       
+                       'design' |
+                       'planner';
+
 export const JobTypes: ReadonlyRecord<JobNames, JobNames> = {
-  frontend  : 'frontend',
-  backend   : 'backend',
-  fullstack : 'fullstack',
-  desgin    : 'desgin',
-  planner   : 'planner',
+  frontend: 'frontend',
+  backend: 'backend',
+  fullstack: 'fullstack',
+  design: 'design',
+  planner: 'planner',
 };

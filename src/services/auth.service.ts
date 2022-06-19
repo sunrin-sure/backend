@@ -5,7 +5,7 @@ import { compareSync, hash } from 'bcrypt';
 import { HttpException } from '@exceptions/HttpException';
 import { UserDto } from '@dtos/users.dto';
 import * as jwt from '@utils/jwt.utils';
-import { R_SECRET_KEY } from '@config';
+import { R_SECRET_KEY } from '@config/env.config';
 
 class AuthService {
   public users = userModel;
