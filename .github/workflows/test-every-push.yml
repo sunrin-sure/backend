@@ -1,0 +1,57 @@
+
+name: 'test-every-push'
+
+on: push
+
+jobs:
+  test:
+    name: Test lint, swc, build
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ secrets.NODE_VERSION }}
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: node_modules
+          key: yarn-packages-${{ hashFiles('**/yarn-lock') }}
+      
+      - name: Create env file
+        run: |
+          touch .env.test
+          echo PORT=${{environment.PORT}} >> .env.test
+          echo DB_URL=${{env.DB_URL}} >> .env.test
+          echo DB_DATABASE=${{secrets.DB_DATABASE}} >> .`env.test
+          echo CLOUD_NAME=${CLOUD_NAME} >> .env.test
+          echo CLOUD_API_KEY=${CLOUD_API_KEY} >> .env.test
+          echo CLOUD_API_SECRET=${CLOUD_API_SECRET} >> .env.test
+          echo DEFAULT_AVATAR=${DEFAULT_AVATAR} >> .env.test
+          echo SECRET_KEY=${SECRET_KEY} >> .env.test
+          echo R_SECRET_KEY=${R_SECRET_KEY} >> .env.test
+          echo ACCESS_EXPIRATION=${ACCESS_EXPIRATION} >> .env.test
+          echo REFRESH_EXPIRATION=${REFRESH_EXPIRATION} >> .env.test
+          echo LOG_FORMAT=${LOG_FORMAT} >> .env.test
+          echo LOG_DIR=${LOG_DIR} >> .env.test
+          echo ORIGIN=${ORIGIN} >> .env.test
+          echo CREDENTIALS=${CREDENTIALS} >> .env.test
+          cat .env.test
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - run: yarn lint
+        if: ${{ always() }}
+        
+      - run: yarn test
+        if: ${{ always() }}
+      
+      - run: yarn build
+        if: ${{ always() }}
