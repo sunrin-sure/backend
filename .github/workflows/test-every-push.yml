@@ -8,6 +8,22 @@ jobs:
     name: Test lint, swc, build
     runs-on: ubuntu-latest
     environment: test
+    env: 
+      PORT: ${{ secrets.PORT }}
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_DATABASE: ${{ secrets.DB_DATABASE }}
+      CLOUD_NAME: ${{ secrets.CLOUD_NAME }}
+      CLOUD_API_KEY: ${{ secrets.CLOUD_API_KEY }}
+      CLOUD_API_SECRET: ${{ secrets.CLOUD_API_SECRET }}
+      DEFAULT_AVATAR: ${{ secrets.DEFAULT_AVATAR }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      R_SECRET_KEY: ${{ secrets.R_SECRET_KEY }}
+      ACCESS_EXPIRATION: ${{ secrets.ACCESS_EXPIRATION }}
+      REFRESH_EXPIRATION: ${{ secrets.REFRESH_EXPIRATION }}
+      LOG_FORMAT: ${{ secrets.LOG_FORMAT }}
+      LOG_DIR: ${{ secrets.LOG_DIR }}
+      ORIGIN: ${{ secrets.ORIGIN }}
+      CREDENTIALS: ${{ secrets.CREDENTIALS }}
     steps:
       - uses: actions/checkout@v3
 
@@ -26,9 +42,9 @@ jobs:
       - name: Create env file
         run: |
           touch .env.test
-          echo PORT=${{environment.PORT}} >> .env.test
-          echo DB_URL=${{env.DB_URL}} >> .env.test
-          echo DB_DATABASE=${{secrets.DB_DATABASE}} >> .`env.test
+          echo PORT=${PORT} >> .env.test
+          echo DB_URL=${DB_URL} >> .env.test
+          echo DB_DATABASE=${DB_DATABASE} >> .env.test
           echo CLOUD_NAME=${CLOUD_NAME} >> .env.test
           echo CLOUD_API_KEY=${CLOUD_API_KEY} >> .env.test
           echo CLOUD_API_SECRET=${CLOUD_API_SECRET} >> .env.test
