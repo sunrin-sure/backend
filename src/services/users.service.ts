@@ -3,8 +3,8 @@ import { User } from '@interfaces/users.interface';
 import isEmpty from '@utils/empty';
 import { HttpException } from '@exceptions/HttpException';
 import { UserDto } from '@dtos/users.dto';
-import { CloudinaryService } from './cloudinary.service';
 import { avatarImageResizer } from '@utils/image-resizer';
+import { CloudinaryService } from './cloudinary.service';
 
 class UserService {
   public users = userModel;

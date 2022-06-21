@@ -2,10 +2,10 @@ import userModel from '@models/user.model';
 import UsersRoute from '@routes/users.route';
 import AuthRoute from '@routes/auth.route';
 import request from 'supertest';
-import App from '@/app';
 import { verify } from '@utils/jwt.utils';
 import { SECRET_KEY } from '@config/env.config';
 import { JwtUserPayload } from '@interfaces/jwt.interface';
+import App from '@/app';
 
 const usersRoute = new UsersRoute();
 const authRoute = new AuthRoute();
@@ -21,20 +21,20 @@ describe('Users Test', () => {
   let accessToken: string;
   before((done) => {
     request(app.getServer())
-    .post('/auth/register')
-    .send({
-      username: 'test',
-      email: 'test2@example.com',
-      password: 'test1234',
-      fields: [
-        'frontend',
-        'design',
-      ],
-      stacks: [
-        'javascript',
-        'react',
-      ],
-    }).end(done);
+      .post('/auth/register')
+      .send({
+        username: 'test',
+        email: 'test2@example.com',
+        password: 'test1234',
+        fields: [
+          'frontend',
+          'design',
+        ],
+        stacks: [
+          'javascript',
+          'react',
+        ],
+      }).end(done);
   });
   before((done) => {
     request(app.getServer())
@@ -53,15 +53,15 @@ describe('Users Test', () => {
     it('유저 목록 불러오기 - 성공', (done) => {
       request(app.getServer())
         .get('/users')
-        .set("Authorization", "Bearer " + accessToken)
+        .set('Authorization', `Bearer ${accessToken}`)
         .expect(200, done);
     });
-    it('유저 아이디로 정보 불러오기 - 성공', (done) => {   
+    it('유저 아이디로 정보 불러오기 - 성공', (done) => {
       const jwtPayload = verify(accessToken, SECRET_KEY) as JwtUserPayload;
       const userId = jwtPayload.id;
       request(app.getServer())
         .get(`/users/${userId}`)
-        .set("Authorization", "Bearer " + accessToken)
+        .set('Authorization', `Bearer ${accessToken}`)
         .expect(200, done);
     });
   });
@@ -72,10 +72,10 @@ describe('Users Test', () => {
       const userId = jwtPayload.id;
       request(app.getServer())
         .patch(`/users/${userId}`)
-        .set("Authorization", "Bearer " + accessToken)
+        .set('Authorization', `Bearer ${accessToken}`)
         .send({
-          username: "update-test",
-          fields: ["backend"],
+          username: 'update-test',
+          fields: ['backend'],
         })
         .expect(200, done);
     });
@@ -87,7 +87,7 @@ describe('Users Test', () => {
       const userId = jwtPayload.id;
       request(app.getServer())
         .delete(`/users/${userId}`)
-        .set("Authorization", "Bearer " + accessToken)
+        .set('Authorization', `Bearer ${accessToken}`)
         .expect(200, done);
     });
   });
