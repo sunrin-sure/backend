@@ -23,7 +23,6 @@ const userSchema: Schema = new Schema({
     type: String,
     required: false,
     default: DEFAULT_AVATAR,
-    select: false,
   },
   fields: {
     type: [String],
