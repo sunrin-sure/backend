@@ -46,7 +46,7 @@ class UserService {
 
   public async uploadUserAvatar(userId: string, fileData: Express.Multer.File): Promise<User> {
     const fileBuffer: Buffer = await avatarImageResizer(fileData);
-    const cloudinary = new CloudinaryService(fileBuffer);
+    const cloudinary = new CloudinaryService(fileBuffer, userId);
     const result = await cloudinary.uploadImage();
     if (result instanceof HttpException) throw result;
 
