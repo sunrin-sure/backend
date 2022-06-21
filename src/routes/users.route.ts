@@ -26,7 +26,7 @@ class UsersRoute implements Routes {
     this.router.patch(`${this.path}`, [authMiddleware, validationMiddleware(UserDto, 'body', true)], this.usersController.updateUser);
     this.router.patch(`${this.path}/:id`, [authMiddleware, validationMiddleware(UserDto, 'body', true)], this.usersController.updateUser);
     this.router.delete(`${this.path}/:id`, authMiddleware, this.usersController.deleteUser);
-    this.router.patch(`${this.path}/upload`, [authMiddleware, this.upload.single('avatar')], this.usersController.uploadUserAvatar);
+    this.router.put(`${this.path}/upload`, [authMiddleware, this.upload.single('avatar')], this.usersController.uploadUserAvatar);
   }
 }
 
