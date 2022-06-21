@@ -68,7 +68,7 @@ class UsersController {
 
   public uploadUserAvatar = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      if (!req.file) next(new HttpException(400, 'Empty File'));
+      if (!req.file) next(new HttpException(400, 'Empty file'));
       const fileData: Express.Multer.File = req.file;
       const userId: string = req.jwtPayload.id;
 
