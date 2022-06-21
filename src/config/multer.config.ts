@@ -5,13 +5,7 @@ import multer, { FileFilterCallback } from 'multer';
 // eslint-disable-next-line
 type FileNameCallback = (error: HttpException | null, filename: string) => void
 
-const storage = multer.diskStorage({
-  destination: 'uploads/avatars/',
-  filename(req: Request, file: Express.Multer.File, cb: FileNameCallback) {
-    const userId: string = req.jwtPayload.id;
-    cb(null, userId);
-  },
-});
+const storage = multer.memoryStorage();
 
 const fileFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
