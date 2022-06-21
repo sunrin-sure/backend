@@ -10,7 +10,6 @@ export class CloudinaryService {
   public uploadImage(): Promise<UploadApiResponse | HttpException> {
     return new Promise((resolve, reject) => {
       const upload = v2.uploader.upload_stream((error, result) => {
-        console.log(result);
         if (error) return reject(new HttpException(error.http_code, error.message));
         return resolve(result);
       });
