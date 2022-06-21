@@ -36,8 +36,8 @@ jobs:
         uses: actions/cache@v3
         id: cache
         with:
-          path: node_modules
-          key: yarn-packages-${{ hashFiles('**/yarn-lock') }}
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       
       - name: Create env file
         run: |
