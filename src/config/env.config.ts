@@ -1,6 +1,10 @@
-import { config } from 'dotenv';
+import * as dotenv from 'dotenv';
 
-config();
+try {
+  dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
+} catch (err) {
+  dotenv.config();
+}
 
 export const CREDENTIALS = process.env.CREDENTIALS === 'true';
 
