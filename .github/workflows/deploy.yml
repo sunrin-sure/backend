@@ -8,6 +8,7 @@ env:
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ${{ secrets.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }}
   AWS_S3_PATH: ${{ secrets.AWS_S3_PATH }}
   AWS_REGION: ap-northeast-2
+  ENV_FILE: ${{ secrets.ENV_FILE }}
 
 jobs:
   deploy:
@@ -36,6 +37,15 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Create Env File
+        run: |
+          touch ${{ env.ENV_FILE }}
+          cat << EOF >> ${{ env.ENV_FILE }}
+          ${{ secrets.ENV }}
+
+      - name: Zip Distributions
+        run: zip -r $GITHUB_SHA.zip ./dist ./appspec.yml ./scripts ./${{ env.ENV_FILE }}
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -44,12 +54,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Upload to AWS S3 
-        run: | 
-          aws deploy push \
-            --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
-            --ignore-hidden-files \
-            --s3-location s3://${{ env.AWS_S3_PATH }}/$GITHUB_SHA.zip \
-            --source .
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://${{ env.AWS_S3_PATH }}/build/
 
       - name: Deploy to AWS EC2 from S3
         run: |
@@ -57,4 +62,4 @@ jobs:
             --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
             --deployment-config-name CodeDeployDefault.AllAtOnce \
             --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
-            --s3-location bucket=$${{ env.AWS_S3_PATH }},key=$GITHUB_SHA.zip,bundleType=zip
+            --s3-location bucket=$${{ env.AWS_S3_PATH }},key=build/$GITHUB_SHA.zip,bundleType=zip
