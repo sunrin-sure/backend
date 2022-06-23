@@ -6,7 +6,7 @@
   "author": "hyangSu <20sunrin007@sunrint.hs.kr>",
   "license": "MIT",
   "scripts": {
-    "deploy:prod": "yarn build && yarn pm2 start ecosystem.config.js --only prod",
+    "deploy:prod": "yarn pm2 start ecosystem.config.js --only prod",
     "deploy:dev": "yarn pm2 start ecosystem.config.js --only dev",
     "start": "yarn build && NODE_ENV=production node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/server.js",
     "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/server.ts",
