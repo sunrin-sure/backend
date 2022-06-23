@@ -29,16 +29,18 @@ export class UserDto {
   )
   public cf_password: string;
 
-  @IsUrl()
   @IsOptional()
+  @IsUrl()
   public avatar: string;
 
+  @IsOptional()
   @IsEnum(JobTypes, {
     each: true,
     message: 'the job you entered does not exist in the database',
   })
   public fields: JobNames[];
 
+  @IsOptional()
   @IsArray()
   public stacks: string[];
 }
