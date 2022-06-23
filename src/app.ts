@@ -9,7 +9,7 @@ import {
   CLOUD_API_KEY,
   CLOUD_NAME,
   CLOUD_API_SECRET,
-  CREDENTIALS, LOG_FORMAT, NODE_ENV, ORIGIN, PORT,
+  CREDENTIALS, NODE_ENV, ORIGIN, PORT,
 } from './config/env.config';
 import { Routes } from './interfaces/routes.interface';
 import { logger, stream } from './utils/logger';
@@ -68,8 +68,8 @@ class App {
   }
 
   private initializeMiddlewares() {
-    this.app.use(morgan(LOG_FORMAT, { stream }));
-    this.app.use(cors({ origin: ['localhost:3000'], credentials: CREDENTIALS }));
+    this.app.use(morgan('combined', { stream }));
+    this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
     this.app.use(helmet());
     this.app.use(cookieParser());
     this.app.use(express.json());

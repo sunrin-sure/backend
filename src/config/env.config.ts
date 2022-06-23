@@ -20,8 +20,6 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const R_SECRET_KEY = process.env.R_SECRET_KEY;
 const ACCESS_EXPIRATION = process.env.ACCESS_EXPIRATION;
 const REFRESH_EXPIRATION = process.env.REFRESH_EXPIRATION;
-const LOG_FORMAT = process.env.LOG_FORMAT;
-const LOG_DIR = process.env.LOG_DIR;
 const ORIGIN = process.env.ORIGIN;
 
 export {
@@ -37,7 +35,5 @@ export {
   R_SECRET_KEY,
   ACCESS_EXPIRATION,
   REFRESH_EXPIRATION,
-  LOG_FORMAT,
-  LOG_DIR,
   ORIGIN,
 };
