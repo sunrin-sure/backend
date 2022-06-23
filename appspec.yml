@@ -13,10 +13,10 @@ permissions:
     group: root
 
 hooks:
-  # BeforeInstall:
-  #   - location: scripts/install.sh
-  #     timeout: 60
-  #     runas: root
+  Install:
+    - location: scripts/install.sh
+      timeout: 60
+      runas: root
   AfterInstall:
     - location: scripts/stop.sh
       timeout: 60
