@@ -3,7 +3,8 @@
   "compilerOptions": {
     "target": "es2021",
     "lib": ["es2021"],
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "types": ["jest", "node"],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -21,9 +22,6 @@
     "importHelpers": true,
     "baseUrl": "src",
   },
-  "ts-node": {
-    "files": true
-  },
   "include": ["src/**/*.ts", "src/**/*.json"],
-  "exclude": ["node_modules", "src/logs"]
+  "exclude": ["node_modules", "src/logs"],
 }
