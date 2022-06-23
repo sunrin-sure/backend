@@ -31,7 +31,7 @@ module.exports = {
     {
       name: 'dev',
       script: 'ts-node',
-      args: '-r tsconfig-paths/register --transpile-only src/server.ts',
+      args: 'src/server.ts',
       exec_mode: 'cluster',
       instance_var: 'INSTANCE_ID',
       instances: 2,
@@ -58,7 +58,7 @@ deploy: {
       ref: 'origin/master',
       repo: 'git@github.com:repo.git',
       path: 'dist/server.js',
-      'post-deploy': 'yarn install && yarn build && yarn pm2 reload ecosystem.config.js --only prod',
+      'post-deploy': 'npm install && npm build && pm2 reload ecosystem.config.js --only prod',
     },
   },
 };
