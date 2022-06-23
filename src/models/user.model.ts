@@ -27,11 +27,11 @@ const userSchema: Schema = new Schema({
   fields: {
     type: [String],
     enum: JobTypes,
-    required: true,
+    required: false,
   },
   stacks: {
     type: [String],
-    required: true,
+    required: false,
   },
   refresh_token: {
     type: String,
