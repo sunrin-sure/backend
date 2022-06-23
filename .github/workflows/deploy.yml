@@ -4,9 +4,9 @@ on:
       - 'main'
 
 env:
-  S3_PATH: ${{ secrets.AWS_S3_PATH }}
   CODE_DEPLOY_APPLICATION_NAME: ${{ secrets.CODE_DEPLOY_APPLICATION_NAME }}
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ${{ secrets.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }}
+  AWS_S3_PATH: ${{ secrets.AWS_S3_PATH }}
   AWS_REGION: ap-northeast-2
 
 jobs:
@@ -36,10 +36,6 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Compressed Build Directory
-        shell: bash
-        run: zip -qq -r ./build.zip .
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -52,8 +48,8 @@ jobs:
           aws deploy push \
             --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
             --ignore-hidden-files \
-            --s3-location s3://${{ env.S3_PATH }}/$GITHUB_SHA.zip \
-            --source ./build.zip
+            --s3-location s3://${{ env.AWS_S3_PATH }}/$GITHUB_SHA.zip \
+            --source .
 
       - name: Deploy to AWS EC2 from S3
         run: |
@@ -61,4 +57,4 @@ jobs:
             --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
             --deployment-config-name CodeDeployDefault.AllAtOnce \
             --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
-            --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
+            --s3-location bucket=$${{ env.AWS_S3_PATH }},key=$GITHUB_SHA.zip,bundleType=zip
