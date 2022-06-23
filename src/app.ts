@@ -10,12 +10,12 @@ import {
   CLOUD_NAME,
   CLOUD_API_SECRET,
   CREDENTIALS, LOG_FORMAT, NODE_ENV, ORIGIN, PORT,
-} from '@config/env.config';
-import { Routes } from '@interfaces/routes.interface';
-import { logger, stream } from '@utils/logger';
-import errorMiddleware from '@middlewares/error.middleware';
+} from './config/env.config';
+import { Routes } from './interfaces/routes.interface';
+import { logger, stream } from './utils/logger';
+import errorMiddleware from './middlewares/error.middleware';
 
-import { dbConnection } from '@config/database.config';
+import { dbConnection } from './config/database.config';
 import { v2 } from 'cloudinary';
 
 class App {

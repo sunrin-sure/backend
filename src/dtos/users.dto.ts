@@ -1,8 +1,8 @@
 import {
   IsArray, IsEmail, IsEnum, IsOptional, IsString, IsUrl, Matches,
 } from 'class-validator';
-import { Match } from '@middlewares/match.decorator';
-import { JobTypes, JobNames } from '@/types/users/user.job.type';
+import { Match } from '../middlewares/match.decorator';
+import { JobTypes, JobNames } from '../types/users/user.job.type';
 
 export class UserDto {
   @IsString()

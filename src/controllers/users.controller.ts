@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 
-import UserService from '@services/users.service';
-import { User } from '@interfaces/users.interface';
-import { UserDto } from '@dtos/users.dto';
-import { HttpException } from '@exceptions/HttpException';
-import { JwtUserPayload } from '@interfaces/jwt.interface';
+import UserService from '../services/users.service';
+import { User } from '../interfaces/users.interface';
+import { UserDto } from '../dtos/users.dto';
+import { HttpException } from '../exceptions/HttpException';
+import { JwtUserPayload } from '../interfaces/jwt.interface';
 
 class UsersController {
   public userService = new UserService();

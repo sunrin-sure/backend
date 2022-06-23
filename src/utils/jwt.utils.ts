@@ -1,9 +1,9 @@
 import {
   ACCESS_EXPIRATION, REFRESH_EXPIRATION, R_SECRET_KEY, SECRET_KEY,
-} from '@config/env.config';
-import { JwtUserPayload } from '@interfaces/jwt.interface';
+} from '../config/env.config';
+import { JwtUserPayload } from '../interfaces/jwt.interface';
 import jwt from 'jsonwebtoken';
-import { HttpException } from '@exceptions/HttpException';
+import { HttpException } from '../exceptions/HttpException';
 import { CookieOptions } from 'express';
 import getCookieTime from './cookie.utils';
 

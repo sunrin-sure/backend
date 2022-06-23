@@ -1,11 +1,11 @@
-import userModel from '@models/user.model';
-import UsersRoute from '@routes/users.route';
-import AuthRoute from '@routes/auth.route';
+import userModel from '../models/user.model';
+import UsersRoute from '../routes/users.route';
+import AuthRoute from '../routes/auth.route';
 import request from 'supertest';
-import { verify } from '@utils/jwt.utils';
-import { SECRET_KEY } from '@config/env.config';
-import { JwtUserPayload } from '@interfaces/jwt.interface';
-import App from '@/app';
+import { verify } from '../utils/jwt.utils';
+import { SECRET_KEY } from '../config/env.config';
+import { JwtUserPayload } from '../interfaces/jwt.interface';
+import App from '../app';
 
 const usersRoute = new UsersRoute();
 const authRoute = new AuthRoute();

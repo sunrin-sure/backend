@@ -1,4 +1,4 @@
-import { HttpException } from '@exceptions/HttpException';
+import { HttpException } from '../exceptions/HttpException';
 import { Request } from 'express';
 import multer, { FileFilterCallback } from 'multer';
 

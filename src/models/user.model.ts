@@ -1,7 +1,7 @@
 import { model, Schema, Document } from 'mongoose';
-import { User } from '@interfaces/users.interface';
-import { DEFAULT_AVATAR } from '@config/env.config';
-import { JobTypes } from '@/types/users/user.job.type';
+import { User } from '../interfaces/users.interface';
+import { DEFAULT_AVATAR } from '../config/env.config';
+import { JobTypes } from '../types/users/user.job.type';
 
 const userSchema: Schema = new Schema({
   username: {

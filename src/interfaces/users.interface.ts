@@ -1,4 +1,4 @@
-import { JobNames } from '@/types/users/user.job.type';
+import { JobNames } from '../types/users/user.job.type';
 
 export interface User {
   _id: string

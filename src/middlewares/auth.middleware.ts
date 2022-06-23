@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { HttpException } from '@exceptions/HttpException';
+import { HttpException } from '../exceptions/HttpException';
 
-import { verify } from '@utils/jwt.utils';
-import { SECRET_KEY } from '@config/env.config';
+import { verify } from '../utils/jwt.utils';
+import { SECRET_KEY } from '../config/env.config';
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (req.headers.authorization) {

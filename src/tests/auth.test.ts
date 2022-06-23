@@ -1,7 +1,7 @@
-import userModel from '@models/user.model';
-import AuthRoute from '@routes/auth.route';
+import userModel from '../models/user.model';
+import AuthRoute from '../routes/auth.route';
 import request from 'supertest';
-import App from '@/app';
+import App from '../app';
 
 const authRoute = new AuthRoute();
 const app = new App([authRoute]);

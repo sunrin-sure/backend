@@ -1,4 +1,4 @@
-import { DB_URL, DB_DATABASE } from '@config/env.config';
+import { DB_URL, DB_DATABASE } from './env.config';
 
 export const dbConnection = {
   url: DB_URL,

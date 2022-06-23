@@ -1,4 +1,4 @@
-import { JwtUserPayload } from '@interfaces/jwt.interface';
+import { JwtUserPayload } from '../../interfaces/jwt.interface';
 
 declare module 'express' {
   export interface Request {

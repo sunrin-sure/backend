@@ -1,9 +1,9 @@
-import userModel from '@models/user.model';
-import { User } from '@interfaces/users.interface';
-import isEmpty from '@utils/empty';
-import { HttpException } from '@exceptions/HttpException';
-import { UserDto } from '@dtos/users.dto';
-import { avatarImageResizer } from '@utils/image-resizer';
+import userModel from '../models/user.model';
+import { User } from '../interfaces/users.interface';
+import isEmpty from '../utils/empty';
+import { HttpException } from '../exceptions/HttpException';
+import { UserDto } from '../dtos/users.dto';
+import { avatarImageResizer } from '../utils/image-resizer';
 import { CloudinaryService } from './cloudinary.service';
 
 class UserService {

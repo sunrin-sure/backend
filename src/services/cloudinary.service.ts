@@ -1,6 +1,6 @@
 import { Readable } from 'stream';
 import { UploadApiResponse, v2 } from 'cloudinary';
-import { HttpException } from '@exceptions/HttpException';
+import { HttpException } from '../exceptions/HttpException';
 
 export class CloudinaryService {
   constructor(public fileBuffer: Buffer, public fileName: string) {
