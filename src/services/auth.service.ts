@@ -1,7 +1,7 @@
+import { compareSync, hash } from 'bcrypt';
 import userModel from '../models/user.model';
 import { User } from '../interfaces/users.interface';
 import isEmpty from '../utils/empty';
-import { compareSync, hash } from 'bcrypt';
 import { HttpException } from '../exceptions/HttpException';
 import { UserDto } from '../dtos/users.dto';
 import * as jwt from '../utils/jwt.utils';

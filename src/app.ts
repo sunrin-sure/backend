@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
+import { v2 } from 'cloudinary';
 import cookieParser from 'cookie-parser';
 import { connect, ConnectOptions, set } from 'mongoose';
 
@@ -16,7 +17,6 @@ import { logger, stream } from './utils/logger';
 import errorMiddleware from './middlewares/error.middleware';
 
 import { dbConnection } from './config/database.config';
-import { v2 } from 'cloudinary';
 
 class App {
   public app: express.Application;

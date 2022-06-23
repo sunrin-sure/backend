@@ -1,10 +1,10 @@
 import { Router } from 'express';
+import multer from 'multer';
 import UsersController from '../controllers/users.controller';
 import { Routes } from '../interfaces/routes.interface';
 import validationMiddleware from '../middlewares/validation.middleware';
 import { UserDto } from '../dtos/users.dto';
 import authMiddleware from '../middlewares/auth.middleware';
-import multer from 'multer';
 import { multerConfig } from '../config/multer.config';
 
 class UsersRoute implements Routes {

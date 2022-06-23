@@ -1,9 +1,6 @@
-import { HttpException } from '../exceptions/HttpException';
 import { Request } from 'express';
 import multer, { FileFilterCallback } from 'multer';
-
-// eslint-disable-next-line
-type FileNameCallback = (error: HttpException | null, filename: string) => void
+import { HttpException } from '../exceptions/HttpException';
 
 const storage = multer.memoryStorage();
 
