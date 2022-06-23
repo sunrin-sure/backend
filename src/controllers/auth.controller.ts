@@ -23,13 +23,13 @@ class AuthController {
       const jwtTokenUserAndCookies = await this.authService.login(userData);
 
       res.cookie('refresh_token', jwtTokenUserAndCookies.token.refreshToken, jwtTokenUserAndCookies.refreshTokenCookieOptions);
-      res.status(200).json({ 
-        data: { 
+      res.status(200).json({
+        data: {
           accessToken: jwtTokenUserAndCookies.token.accessToken,
           refreshToken: jwtTokenUserAndCookies.token.refreshToken,
-          user: jwtTokenUserAndCookies.user 
-        }, 
-        message: 'login' 
+          user: jwtTokenUserAndCookies.user,
+        },
+        message: 'login',
       });
     } catch (error) {
       next(error);
