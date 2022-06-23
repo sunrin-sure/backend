@@ -8,21 +8,7 @@ try {
 
 export const CREDENTIALS = process.env.CREDENTIALS === 'true';
 
-const NODE_ENV = process.env.NODE_ENV;
-const PORT = process.env.PORT;
-const DB_URL = process.env.DB_URL;
-const DB_DATABASE = process.env.DB_DATABASE;
-const CLOUD_NAME = process.env.CLOUD_NAME;
-const CLOUD_API_KEY = process.env.CLOUD_API_KEY;
-const CLOUD_API_SECRET = process.env.CLOUD_API_SECRET;
-const DEFAULT_AVATAR = process.env.DEFAULT_AVATAR;
-const SECRET_KEY = process.env.SECRET_KEY;
-const R_SECRET_KEY = process.env.R_SECRET_KEY;
-const ACCESS_EXPIRATION = process.env.ACCESS_EXPIRATION;
-const REFRESH_EXPIRATION = process.env.REFRESH_EXPIRATION;
-const ORIGIN = process.env.ORIGIN;
-
-export {
+export const {
   NODE_ENV,
   PORT,
   DB_URL,
@@ -36,4 +22,4 @@ export {
   ACCESS_EXPIRATION,
   REFRESH_EXPIRATION,
   ORIGIN,
-};
+} = process.env;
