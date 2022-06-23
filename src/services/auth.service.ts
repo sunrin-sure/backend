@@ -32,11 +32,7 @@ class AuthService {
     const findUser: User = await this.users.findOne({
       email: userData.email,
     })
-      .select({
-        _id: 1,
-        password: 1,
-        admin: 1,
-      });
+      .select('+password');
 
     if (!findUser) throw new HttpException(401, 'Incorrect email');
 
@@ -51,7 +47,7 @@ class AuthService {
     const updateRefreshToken = await this.users.findByIdAndUpdate(findUser._id, userRefreshToken, { returnDocument: 'after' });
     if (!updateRefreshToken) throw new HttpException(409, 'You\'re not user');
 
-    return { token: { accessToken, refreshToken }, refreshTokenCookieOptions };
+    return { token: { accessToken, refreshToken }, user: findUser, refreshTokenCookieOptions };
   }
 
   public async logout(userId: string) {

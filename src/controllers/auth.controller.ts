@@ -20,10 +20,17 @@ class AuthController {
   public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: UserDto = req.body;
-      const jwtTokenAndCookies = await this.authService.login(userData);
+      const jwtTokenUserAndCookies = await this.authService.login(userData);
 
-      res.cookie('refresh_token', jwtTokenAndCookies.token.refreshToken, jwtTokenAndCookies.refreshTokenCookieOptions);
-      res.status(200).json({ data: jwtTokenAndCookies.token, message: 'login' });
+      res.cookie('refresh_token', jwtTokenUserAndCookies.token.refreshToken, jwtTokenUserAndCookies.refreshTokenCookieOptions);
+      res.status(200).json({ 
+        data: { 
+          accessToken: jwtTokenUserAndCookies.token.accessToken,
+          refreshToken: jwtTokenUserAndCookies.token.refreshToken,
+          user: jwtTokenUserAndCookies.user 
+        }, 
+        message: 'login' 
+      });
     } catch (error) {
       next(error);
     }
