@@ -1,6 +1,0 @@
-{
-  "extension": ["ts"],
-  "package": "./package.json",
-  "spec": "src/tests/*.test.ts",
-  "require": ["ts-node/register", "tsconfig-paths/register"]
-}

@@ -1,17 +1,17 @@
-import userModel from '../models/user.model';
-import UsersRoute from '../routes/users.route';
-import AuthRoute from '../routes/auth.route';
+import userModel from '../src/models/user.model';
+import UsersRoute from '../src/routes/users.route';
+import AuthRoute from '../src/routes/auth.route';
 import request from 'supertest';
-import { verify } from '../utils/jwt.utils';
-import { SECRET_KEY } from '../config/env.config';
-import { JwtUserPayload } from '../interfaces/jwt.interface';
-import App from '../app';
+import { verify } from '../src/utils/jwt.utils';
+import { SECRET_KEY } from '../src/config/env.config';
+import { JwtUserPayload } from '../src/interfaces/jwt.interface';
+import App from '../src/app';
 
 const usersRoute = new UsersRoute();
 const authRoute = new AuthRoute();
 const app = new App([usersRoute, authRoute]);
 
-before(async () => {
+beforeAll(async () => {
   const users = userModel;
   await users.findOneAndRemove({ where: { email: 'test2@example.com' } });
 });
@@ -19,7 +19,7 @@ before(async () => {
 describe('Users Test', () => {
   // 회원가입 & 로그인 -> 토큰
   let accessToken: string;
-  before((done) => {
+  beforeAll((done) => {
     request(app.getServer())
       .post('/auth/register')
       .send({
@@ -36,7 +36,7 @@ describe('Users Test', () => {
         ],
       }).end(done);
   });
-  before((done) => {
+  beforeAll((done) => {
     request(app.getServer())
       .post('/auth/login')
       .send({
@@ -93,7 +93,7 @@ describe('Users Test', () => {
   });
 });
 
-after(async () => {
+afterAll(async () => {
   const users = userModel;
   await users.findOneAndRemove({ where: { email: 'test2@example.com' } });
 });

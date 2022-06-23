@@ -1,13 +1,13 @@
-import userModel from '../models/user.model';
-import AuthRoute from '../routes/auth.route';
+import userModel from '../src/models/user.model';
+import AuthRoute from '../src/routes/auth.route';
 import request from 'supertest';
-import App from '../app';
+import App from '../src/app';
 
 const authRoute = new AuthRoute();
 const app = new App([authRoute]);
 
 describe('Auth Test', () => {
-  before(async () => {
+  beforeAll(async () => {
     const users = userModel;
     await users.findOneAndRemove({ where: { email: 'test@example.com' } });
   });
@@ -139,7 +139,7 @@ describe('Auth Test', () => {
     });
   });
 
-  after(async () => {
+  afterAll(async () => {
     const users = userModel;
     await users.findOneAndRemove({ where: { email: 'test@example.com' } });
   });
