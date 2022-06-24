@@ -5,7 +5,7 @@ export interface ProjectPost {
   author: string;
   contents: string;
   type: string;
-  banner: string;
+  thumbnail: string;
   recruitment_limit: number;
   desired_fields: JobNames[];
   desired_stacks: string[];

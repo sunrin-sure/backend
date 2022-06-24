@@ -12,7 +12,7 @@ const projectPostSchema: Schema = new Schema(
     // 작성자
     author: {
       type: String,
-      required: true,
+      required: false,
     },
     // 내용
     contents: {
@@ -25,9 +25,9 @@ const projectPostSchema: Schema = new Schema(
       required: true,
     },
     // 배너 이미지
-    banner: {
+    thumbnail: {
       type: String,
-      required: true,
+      required: false,
     },
     // 모집 인원
     recruitment_limit: {

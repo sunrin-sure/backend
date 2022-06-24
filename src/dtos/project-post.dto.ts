@@ -1,7 +1,7 @@
 import {
   IsArray,
   IsEnum,
-  IsNumber,
+  IsInt,
   IsOptional,
   IsString,
   IsUrl,
@@ -14,6 +14,7 @@ export class ProjectPostDto {
   @MaxLength(20, { message: 'title is too long' })
   public title: string;
 
+  @IsOptional()
   @IsString()
   public author: string;
 
@@ -25,9 +26,9 @@ export class ProjectPostDto {
 
   @IsOptional()
   @IsUrl()
-  public banner: string;
+  public thumbnail: string;
 
-  @IsNumber()
+  @IsInt()
   public recruitment_limit: number;
 
   @IsEnum(JobTypes, {
