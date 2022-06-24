@@ -1,6 +1,6 @@
+import { NextFunction, Request, Response } from 'express';
 import { ProjectPostDto } from '../dtos/project-post.dto';
 import { HttpException } from '../exceptions/HttpException';
-import { NextFunction, Request, Response } from 'express';
 import { JwtUserPayload } from '../interfaces/jwt.interface';
 import { ProjectPost } from '../interfaces/project-post.interface';
 import ProjectPostService from '../services/project-post.service';
@@ -35,6 +35,22 @@ class ProjectPostController {
       res
         .status(200)
         .json({ data: findOneProjectPostData, message: 'findOne' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public createProjectPost = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const userId: string = req.jwtPayload.id;
+      const projectPostData: ProjectPostDto = req.body;
+      const newProjectPostData = await this.projectPostService.createProjectPost(userId, projectPostData);
+
+      res.status(201).json({ data: newProjectPostData, message: 'created' });
     } catch (error) {
       next(error);
     }

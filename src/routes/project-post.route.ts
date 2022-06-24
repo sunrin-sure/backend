@@ -19,6 +19,7 @@ class ProjectPostRoute implements Routes {
   private initializeRoutes() {
     this.router.get(`${this.path}`, authMiddleware, this.projectPostController.getProjectPosts);
     this.router.get(`${this.path}/:id`, authMiddleware, this.projectPostController.getProjectPosts);
+    this.router.post(`${this.path}`, [authMiddleware, validationMiddleware(ProjectPostDto, 'body')], this.projectPostController.createProjectPost);
     this.router.patch(`${this.path}/:id`, [authMiddleware, validationMiddleware(ProjectPostDto, 'body', true)], this.projectPostController.updateProjectPost);
     this.router.delete(`${this.path}/:id`, authMiddleware, this.projectPostController.deleteProjectPost);
   }
