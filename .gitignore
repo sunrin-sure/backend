@@ -15,6 +15,7 @@ yarn.lock
 # build / generate output
 dist
 uploads
+coverage
 
 # dotenv environment variables file
 .env.development
