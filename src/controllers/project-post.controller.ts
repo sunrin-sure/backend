@@ -1,9 +1,9 @@
-import { ProjectPostDto } from 'dtos/project-post.dto';
-import { HttpException } from 'exceptions/HttpException';
+import { ProjectPostDto } from '../dtos/project-post.dto';
+import { HttpException } from '../exceptions/HttpException';
 import { NextFunction, Request, Response } from 'express';
-import { JwtUserPayload } from 'interfaces/jwt.interface';
-import { ProjectPost } from 'interfaces/project-post.interface';
-import ProjectPostService from 'services/project-post.service';
+import { JwtUserPayload } from '../interfaces/jwt.interface';
+import { ProjectPost } from '../interfaces/project-post.interface';
+import ProjectPostService from '../services/project-post.service';
 
 class ProjectPostController {
   public projectPostService = new ProjectPostService();

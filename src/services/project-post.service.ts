@@ -1,8 +1,8 @@
-import { ProjectPost } from 'interfaces/project-post.interface';
-import projectPostModel from 'models/project-post.model';
-import isEmpty from 'utils/empty';
-import { HttpException } from 'exceptions/HttpException';
-import { ProjectPostDto } from 'dtos/project-post.dto';
+import { ProjectPost } from '../interfaces/project-post.interface';
+import projectPostModel from '../models/project-post.model';
+import isEmpty from '../utils/empty';
+import { HttpException } from '../exceptions/HttpException';
+import { ProjectPostDto } from '../dtos/project-post.dto';
 
 class ProjectPostService {
   public posts = projectPostModel;

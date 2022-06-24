@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { Routes } from 'interfaces/routes.interface';
-import ProjectPostController from 'controllers/project-post.controller';
-import authMiddleware from 'middlewares/auth.middleware';
-import { ProjectPostDto } from 'dtos/project-post.dto';
-import validationMiddleware from 'middlewares/validation.middleware';
+import { Routes } from '../interfaces/routes.interface';
+import ProjectPostController from '../controllers/project-post.controller';
+import authMiddleware from '../middlewares/auth.middleware';
+import { ProjectPostDto } from '../dtos/project-post.dto';
+import validationMiddleware from '../middlewares/validation.middleware';
 
 class ProjectPostRoute implements Routes {
   public path = '/project-post';

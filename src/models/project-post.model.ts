@@ -1,4 +1,4 @@
-import { ProjectPost } from 'interfaces/project-post.interface';
+import { ProjectPost } from '../interfaces/project-post.interface';
 import { model, Schema, Document } from 'mongoose';
 import { JobTypes } from '../types/users/user.job.type';
 
