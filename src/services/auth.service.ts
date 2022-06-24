@@ -13,6 +13,9 @@ class AuthService {
   public async register(userData: UserDto): Promise<boolean> {
     if (isEmpty(userData)) throw new HttpException(400, 'You\'re not userData');
 
+    if (await this.users.findOne({ username: userData.username })) {
+      throw new HttpException(409, `You're username ${userData.username} already exists`);
+    }
     const findUser: User = await this.users.findOne({ email: userData.email });
     if (findUser) {
       throw new HttpException(409, `You're email ${userData.email} already exists`);
