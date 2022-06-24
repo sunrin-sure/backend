@@ -48,7 +48,10 @@ class ProjectPostController {
     try {
       const userId: string = req.jwtPayload.id;
       const projectPostData: ProjectPostDto = req.body;
-      const newProjectPostData = await this.projectPostService.createProjectPost(userId, projectPostData);
+      const newProjectPostData = await this.projectPostService.createProjectPost(
+        userId,
+        projectPostData,
+      );
 
       res.status(201).json({ data: newProjectPostData, message: 'created' });
     } catch (error) {

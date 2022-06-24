@@ -23,7 +23,10 @@ class ProjectPostService {
     return findProjectPost;
   }
 
-  public async createProjectPost(userId: string, projectPostData: ProjectPostDto): Promise<ProjectPost> {
+  public async createProjectPost(
+    userId: string,
+    projectPostData: ProjectPostDto,
+  ): Promise<ProjectPost> {
     if (isEmpty(projectPostData)) throw new HttpException(400, 'You\'re not postData');
 
     const newProjectPost: ProjectPost = await this.posts.create({

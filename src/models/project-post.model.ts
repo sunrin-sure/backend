@@ -1,5 +1,5 @@
-import { ProjectPost } from '../interfaces/project-post.interface';
 import { model, Schema, Document } from 'mongoose';
+import { ProjectPost } from '../interfaces/project-post.interface';
 import { JobTypes } from '../types/users/user.job.type';
 
 const projectPostSchema: Schema = new Schema(
