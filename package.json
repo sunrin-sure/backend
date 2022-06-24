@@ -14,7 +14,7 @@
     "build": "rimraf ./dist && tsc",
     "test": "jest",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "eslint --fix --ignore-path .gitignore --ext .ts src/"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
