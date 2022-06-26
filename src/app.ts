@@ -69,11 +69,25 @@ class App {
 
   private initializeMiddlewares() {
     this.app.use(morgan('combined', { stream }));
-    this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
+    this.app.use(cors(this.initalizeCorsOptions()));
     this.app.use(helmet());
     this.app.use(cookieParser());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+  }
+
+  private initalizeCorsOptions() {
+    const whitelist = ORIGIN.split(',').map(origin => origin.trim());
+    return { 
+      origin: function (origin, cb) {
+        if (whitelist.indexOf(origin) !== -1) {
+          cb(null, true)
+        } else {
+          cb(new Error("Not Allowed Origin!"));
+        }
+      },
+      credentials: CREDENTIALS,
+    };
   }
 
   private initializeRoutes(routes: Routes[]) {
