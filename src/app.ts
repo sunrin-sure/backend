@@ -51,7 +51,7 @@ class App {
   }
 
   private connectToDatabase() {
-    if (this.env === 'debug') {
+    if (this.env === 'development') {
       set('debug', true);
     }
 
