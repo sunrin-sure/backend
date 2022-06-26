@@ -80,10 +80,10 @@ class App {
     const whitelist = ORIGIN.split(',').map(origin => origin.trim());
     return { 
       origin: function (origin, cb) {
-        if (whitelist.indexOf(origin) !== -1) {
+        if (!origin || whitelist.indexOf(origin) !== -1) {
           cb(null, true)
         } else {
-          cb(new Error("Not Allowed Origin!"));
+          cb(new Error("Not Allowed Origin"));
         }
       },
       credentials: CREDENTIALS,
