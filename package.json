@@ -19,8 +19,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "eslint --fix",
-      "git reset HEAD~1"
+      "npm run lint:fix"
     ]
   },
   "dependencies": {

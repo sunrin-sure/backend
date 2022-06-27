@@ -25,10 +25,13 @@ class App {
 
   public port: string | number;
 
+  public origin: string[];
+
   constructor(routes: Routes[]) {
     this.app = express();
     this.env = NODE_ENV || 'development';
     this.port = PORT || 3000;
+    this.origin = ORIGIN.split(',').map((origin) => origin.trim());
 
     this.connectToDatabase();
     this.connectToCloudinary();
@@ -77,13 +80,13 @@ class App {
   }
 
   private initalizeCorsOptions() {
-    const whitelist = ORIGIN.split(',').map(origin => origin.trim());
-    return { 
-      origin: function (origin, cb) {
+    const whitelist = this.origin;
+    return {
+      origin(origin, cb) {
         if (!origin || whitelist.indexOf(origin) !== -1) {
-          cb(null, true)
+          cb(null, true);
         } else {
-          cb(new Error("Not Allowed Origin"));
+          cb(new Error('Not Allowed Origin'));
         }
       },
       credentials: CREDENTIALS,
