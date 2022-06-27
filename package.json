@@ -6,6 +6,7 @@
   "author": "hyangSu <20sunrin007@sunrint.hs.kr>",
   "license": "MIT",
   "scripts": {
+    "prepare": "husky install",
     "deploy:prod": "pm2 start ecosystem.config.js --only prod",
     "deploy:dev": "pm2 start ecosystem.config.js --only dev",
     "start": "NODE_ENV=development node dist/server.js",
@@ -15,9 +16,6 @@
     "test": "jest",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "eslint --fix --ignore-path .gitignore --ext .ts src/"
-  },
-  "lint-staged": {
-    "src/**/*.ts": "eslint --cache --fix"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
