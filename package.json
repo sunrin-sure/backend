@@ -17,6 +17,12 @@
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "eslint --fix --ignore-path .gitignore --ext .ts src/"
   },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "git reset HEAD~1"
+    ]
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
