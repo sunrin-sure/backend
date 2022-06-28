@@ -20,7 +20,9 @@ class UsersController {
 
   public getUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId: string = req.params.id;
+      let userId: string = req.params.id;
+      if (userId === 'me') userId = req.jwtPayload.id;
+      
       const findOneUserData: User = await this.userService.findUserById(userId);
 
       res.status(200).json({ data: findOneUserData, message: 'findOne' });
