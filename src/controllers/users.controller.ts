@@ -22,7 +22,7 @@ class UsersController {
     try {
       let userId: string = req.params.id;
       if (userId === 'me') userId = req.jwtPayload.id;
-      
+
       const findOneUserData: User = await this.userService.findUserById(userId);
 
       res.status(200).json({ data: findOneUserData, message: 'findOne' });
