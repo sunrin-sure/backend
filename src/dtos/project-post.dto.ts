@@ -1,5 +1,6 @@
 import {
   IsArray,
+  IsBoolean,
   IsEnum,
   IsInt,
   IsOptional,
@@ -40,4 +41,7 @@ export class ProjectPostDto {
   @IsOptional()
   @IsArray()
   public desired_stacks: string[];
+
+  @IsBoolean()
+  public is_open: boolean;
 }

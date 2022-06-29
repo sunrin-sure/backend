@@ -45,6 +45,11 @@ const projectPostSchema: Schema = new Schema(
       type: [String],
       required: false,
     },
+    is_open: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
   },
   { timestamps: true, versionKey: false },
 );

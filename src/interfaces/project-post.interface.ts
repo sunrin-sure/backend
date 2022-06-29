@@ -9,4 +9,5 @@ export interface ProjectPost {
   recruitment_limit: number;
   desired_fields: JobNames[];
   desired_stacks: string[];
+  is_open: boolean;
 }
