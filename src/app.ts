@@ -6,6 +6,8 @@ import { v2 } from 'cloudinary';
 import cookieParser from 'cookie-parser';
 import { connect, ConnectOptions, set } from 'mongoose';
 
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 import {
   CLOUD_API_KEY,
   CLOUD_NAME,
@@ -35,6 +37,7 @@ class App {
 
     this.connectToDatabase();
     this.connectToCloudinary();
+    this.initializeSwagger();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeErrorHandler();
@@ -97,6 +100,22 @@ class App {
     routes.forEach((route) => {
       this.app.use('/', route.router);
     });
+  }
+
+  private initializeSwagger() {
+    const options = {
+      swaggerDefinition: {
+        info: {
+          title: 'REST API',
+          version: '1.0.0',
+          description: 'Example docs',
+        },
+      },
+      apis: ['swagger.yaml'],
+    };
+
+    const specs = swaggerJSDoc(options);
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
   }
 
   private initializeErrorHandler() {
