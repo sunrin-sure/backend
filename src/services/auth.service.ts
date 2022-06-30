@@ -47,7 +47,7 @@ class AuthService {
 
     const userRefreshToken = { refresh_token: refreshToken } as User;
 
-    const updateRefreshToken = await this.users.findByIdAndUpdate(findUser._id, userRefreshToken, { returnDocument: 'after' });
+    const updateRefreshToken = await this.users.findByIdAndUpdate(findUser._id, { $set: userRefreshToken }, { returnDocument: 'after' });
     if (!updateRefreshToken) throw new HttpException(409, 'You\'re not user');
 
     return { token: { accessToken, refreshToken }, user: findUser, refreshTokenCookieOptions };
@@ -67,9 +67,9 @@ class AuthService {
       .select({ _id: 1, admin: 1, refresh_token: 1 });
     if (!findUser) throw new HttpException(401, 'You don\'t have refresh token');
 
-    const refreshDecodedToken = jwt.verify(findUser.refresh_token, R_SECRET_KEY);
+    const refreshDecodedToken = jwt.verify(refreshToken, R_SECRET_KEY);
     if (refreshDecodedToken instanceof HttpException) throw refreshDecodedToken;
-
+    console.log(findUser._id.toString(), refreshDecodedToken.id);
     if (findUser._id.toString() !== refreshDecodedToken.id) throw new HttpException(401, 'Invalid refresh token');
     const newAccessTokenAndCookie = jwt.sign({ id: findUser._id, admin: findUser.admin });
 
