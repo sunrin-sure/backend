@@ -51,7 +51,7 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/user'
+                $ref: '#/components/schemas/default'
         401:
           $ref: '#/components/responses/UnauthorizedError'
         500:
