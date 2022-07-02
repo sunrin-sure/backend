@@ -30,6 +30,7 @@ class UserService {
 
     if (userData.email) throw new HttpException(400, 'Email cannot be updated');
     if (userData.password) throw new HttpException(400, 'Password cannot be updated');
+    if (userData.avatar) throw new HttpException(400, 'Avatar cannot be updated');
 
     const updateUserById: User = await this.users.findByIdAndUpdate(userId, { $set: userData }, { returnDocument: 'after' });
     if (!updateUserById) throw new HttpException(409, 'You\'re not user');
