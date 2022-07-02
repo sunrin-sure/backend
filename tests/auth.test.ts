@@ -1,6 +1,6 @@
+import request from 'supertest';
 import userModel from '../src/models/user.model';
 import AuthRoute from '../src/routes/auth.route';
-import request from 'supertest';
 import App from '../src/app';
 
 const authRoute = new AuthRoute();
@@ -13,6 +13,19 @@ describe('Auth Test', () => {
   });
 
   describe('[POST] /auth/register', () => {
+    it('회원가입 - 패스워드 재입력 테스트', (done) => {
+      request(app.getServer())
+        .post('/auth/register')
+        .send({
+          username: 'test1234',
+          email: 'test@example.com',
+          password: 'test1234',
+          cf_password: 'test',
+        })
+        .expect({ error: 'password not matched' })
+        .expect(400, done);
+    });
+
     it('회원가입 - Username Regex 테스트', (done) => {
       request(app.getServer())
         .post('/auth/register')
@@ -20,8 +33,7 @@ describe('Auth Test', () => {
           username: 'test  test',
           email: 'test@example.com',
           password: 'test1234',
-          fields: ['backend'],
-          stacks: ['typescript'],
+          cf_password: 'test1234',
         })
         .expect({ error: 'username must match regular expression' })
         .expect(400, done);
@@ -34,8 +46,7 @@ describe('Auth Test', () => {
           username: 'test1234',
           email: 'test@example.com',
           password: 'test',
-          fields: ['backend'],
-          stacks: ['typescript'],
+          cf_password: 'test',
         })
         .expect({ error: 'password must match regular expression' })
         .expect(400, done);
@@ -48,14 +59,7 @@ describe('Auth Test', () => {
           username: 'test',
           email: 'test@example.com',
           password: 'test1234',
-          fields: [
-            'frontend',
-            'design',
-          ],
-          stacks: [
-            'javascript',
-            'react',
-          ],
+          cf_password: 'test1234',
         })
         .expect({ data: true, message: 'register' })
         .expect(201, done);
@@ -68,8 +72,7 @@ describe('Auth Test', () => {
           username: 'test1234',
           email: 'test@example.com',
           password: 'test1234',
-          fields: ['backend'],
-          stacks: ['typescript'],
+          cf_password: 'test1234',
         })
         .expect({ error: 'You\'re email test@example.com already exists' })
         .expect(409, done);
