@@ -105,10 +105,11 @@ class App {
   private initializeSwagger() {
     const options = {
       swaggerDefinition: {
+        openapi: '3.0.1',
         info: {
-          title: 'REST API',
+          title: 'Sunrin Sure REST API',
           version: '1.0.0',
-          description: 'Example docs',
+          description: 'Sunrin Sure API 문서',
         },
       },
       apis: ['swagger.yaml'],

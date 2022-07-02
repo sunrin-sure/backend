@@ -1,0 +1,256 @@
+openapi: 3.0.1
+servers:
+- url: https://sunrin-sure.herokuapp.com
+  description: 개발 서버
+- url: http://localhost:3000
+  description: 로컬 서버
+- url: https://api.rarp.kr
+  description: 운영 서버
+
+tags:
+- name: users
+  description: users API
+
+paths:
+  /users:
+    get:
+      tags:
+      - users
+      summary: 모든 유저 리스트
+      security:
+      - jwt: []
+      responses:
+        200:
+          description: 모든 유저 리스트 출력
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/users'
+                  message:
+                    type: string
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        500:
+          description: Server Error
+          content: {}
+  /users/me:
+    get:
+      tags:
+      - users
+      summary: 자신의 유저 정보 검색
+      security:
+      - jwt: []
+      responses:
+        200:
+          description: 자신의 유저 정보 출력
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/user'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        500:
+          description: Server Error
+          content: {}
+  /users/{id}:
+    get:
+      tags:
+      - users
+      summary: 유저 아이디로 단일 유저 검색
+      security:
+      - jwt: []
+      parameters:
+      - name: id
+        in: path
+        description: User Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: 검색된 유저 정보 출력
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/default'
+        400:
+          description: Bad Request
+          content: {}
+        409:
+          description: Conflict
+          content: {}
+        500:
+          description: Server Error
+          content: {}
+    patch:
+      tags:
+      - users
+      summary: 유저 아이디를 통해 유저 정보 업데이트
+      security:
+      - jwt: []
+      parameters:
+      - name: id
+        in: path
+        description: user Id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: user Data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/default'
+        400:
+          description: Bad Request
+          content: {}
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        409:
+          description: Conflict
+          content: {}
+        500:
+          description: Server Error
+          content: {}
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - users
+      summary: 아이디를 통해 유저를 삭제
+      security:
+      - jwt: []
+      parameters:
+      - name: id
+        in: path
+        description: user Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/default'
+        400:
+          description: Bad Request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        409:
+          description: Conflict
+          content: {}
+        500:
+          description: Server Error
+          content: {}
+  /users/upload:
+    put:
+      tags:
+      - users
+      summary: 유저 프로필 이미지 등록
+      security:
+      - jwt: []
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/default'
+        400:
+          description: Bad Request
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        409:
+          description: Conflict
+          content: {}
+        500:
+          description: Server Error
+          content: {}
+components:
+  schemas:
+    default:
+      type: object
+      properties:
+        data:
+          type: object
+          $ref: '#/components/schemas/user'
+        message:
+          type: string
+          description: 요청 기능 설명
+    user:
+      required:
+      - email
+      type: object
+      properties:
+        _id:
+          type: string
+          description: 유저 아이디
+        username:
+          type: string
+          description: 유저 닉네임
+        email:
+          type: string
+          description: 유저 이메일
+        avatar:
+          type: string
+          description: 유저 프로필 URL
+        fields:
+          type: array
+          items:
+            type: string
+          description: 유저 분야 종류
+        stacks:
+          type: array
+          items:
+            type: string
+          description: 유저 기술 종류
+    users:
+      required:
+      - _id
+      - username
+      - fields
+      - stacks
+      type: object
+      properties:
+        _id:
+          type: string
+          description: 유저 아이디
+        username:
+          type: string
+          description: 유저 닉네임
+        fields:
+          type: array
+          items:
+            type: string
+          description: 유저 분야 종류
+        stacks:
+          type: array
+          items:
+            type: string
+          description: 유저 기술 종류
+  responses:
+    UnauthorizedError:
+      description: token is empty
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      
