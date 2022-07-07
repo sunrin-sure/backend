@@ -35,7 +35,8 @@ const refresh = (payload: JwtUserPayload) => {
     expires: getCookieTime(REFRESH_EXPIRATION, 'expires'),
     maxAge: getCookieTime(REFRESH_EXPIRATION, 'maxage'),
     httpOnly: true,
-    sameSite: 'lax',
+    secure: true,
+    sameSite: 'strict',
   };
 
   return { refreshToken: token, refreshTokenCookieOptions };
