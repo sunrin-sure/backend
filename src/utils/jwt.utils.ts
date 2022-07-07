@@ -34,9 +34,10 @@ const refresh = (payload: JwtUserPayload) => {
   const refreshTokenCookieOptions: CookieOptions = {
     expires: getCookieTime(REFRESH_EXPIRATION, 'expires'),
     maxAge: getCookieTime(REFRESH_EXPIRATION, 'maxage'),
+    // domain: 'sunrin-sure-dev.netlify.app',
     httpOnly: true,
     secure: true,
-    sameSite: 'strict',
+    sameSite: 'none',
   };
 
   return { refreshToken: token, refreshTokenCookieOptions };
